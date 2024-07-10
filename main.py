@@ -143,7 +143,21 @@ df2= pd.DataFrame(data2, columns=columns)
 
 
 
-model=pickle.load(open("strnew.pkl","rb"))
+# model=pickle.load(open("strnew.pkl","rb"))
+
+
+import os
+
+
+model_path = os.path.join(os.path.dirname(__file__), "strnew.pkl")
+try:
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
+except FileNotFoundError:
+    st.error(f"Model file {model_path} not found.")
+except Exception as e:
+    st.error(f"An error occurred while loading the model: {e}")
+
 
 
 
