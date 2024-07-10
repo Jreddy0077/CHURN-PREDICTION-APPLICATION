@@ -171,7 +171,7 @@ if st.button("Predict"):
                 st.balloons()  # This simulates a celebratory animation
             else:
                 st.write("**Bad luck! The customer is predicted to churn and discontinue their subscription.** 😞")
-                st.toast('bad luck', icon="👎👎")
+                st.toast('bad luck', icon="👎")
         except Exception as e:
             st.error(f"An error occurred during prediction: {e}")
  
