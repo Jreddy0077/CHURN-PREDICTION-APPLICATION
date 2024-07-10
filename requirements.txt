@@ -2,3 +2,6 @@ pandas
 streamlit
 scikit-learn==1.2.2
 numpy==1.23.5
+streamlit-option-menu
+seaborn
+matplotlib
