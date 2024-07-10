@@ -148,7 +148,7 @@ df2= pd.DataFrame(data2, columns=columns)
 
 
 
-model=pickle.load(open("strnew1.pkl","rb"))
+model=pickle.load(open("strnew.pkl","rb"))
 
 
 
