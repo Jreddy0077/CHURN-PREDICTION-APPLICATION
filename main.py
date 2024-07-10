@@ -160,7 +160,9 @@ except Exception as e:
 
 
 if st.button("Predict"):
-    with st.spinner('Predicting...'):
+    with st.spinner("Please wait while predicting...."):
+        time.sleep(3)
+    
         try:
             result = model.predict(df2)
             if result[0] == 0:
@@ -168,6 +170,7 @@ if st.button("Predict"):
                 st.balloons()  # This simulates a celebratory animation
             else:
                 st.write("**Bad luck! The customer is predicted to churn and discontinue their subscription.** 😞")
+                st.toast('bad luck', icon='👎👎')
         except Exception as e:
             st.error(f"An error occurred during prediction: {e}")
  
