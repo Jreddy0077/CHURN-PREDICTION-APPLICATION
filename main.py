@@ -161,21 +161,23 @@ except Exception as e:
 
 
 
-    
+   if st.button("Predict"):
+    with st.spinner('Predicting...'):
+        try:
+            result = model.predict(input_df)
+            if result[0] == 0:
+                st.write("**Congratulations! The customer is likely to continue their subscription.** 🎉😊")
+                st.balloons()  # This simulates a celebratory animation
+            else:
+                st.write("**Bad luck! The customer is predicted to churn and discontinue their subscription.** 😞")
+        except Exception as e:
+            st.error(f"An error occurred during prediction: {e}")
+ 
         
     
 
 
-import streamlit as st
 
 
-with c1:
-    if st.button("Predict", key="submit_2"):
-        result2 = model.predict(df2)
-        if result2==0:
-            output1="** Congratulations! The customer is likely to continue their subscription.**"
-        else:
-            output1="**Bad luck! The customer is predicted to churn and discontinue their subscription.**"
-        st.write(output1)
 
 
