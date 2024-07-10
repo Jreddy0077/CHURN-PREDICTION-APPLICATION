@@ -162,7 +162,7 @@ except Exception as e:
 if st.button("Predict"):
     with st.spinner('Predicting...'):
         try:
-            result = model.predict(input_df)
+            result = model.predict(df)
             if result[0] == 0:
                 st.write("**Congratulations! The customer is likely to continue their subscription.** 🎉😊")
                 st.balloons()  # This simulates a celebratory animation
