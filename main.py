@@ -159,9 +159,7 @@ except Exception as e:
     st.error(f"An error occurred while loading the model: {e}")
 
 
-
-
-   if st.button("Predict"):
+if st.button("Predict"):
     with st.spinner('Predicting...'):
         try:
             result = model.predict(input_df)
