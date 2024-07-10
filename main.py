@@ -5,13 +5,9 @@ import streamlit as st
 
 
 st.set_page_config(layout="wide")
-
-#st.image(r"C:\Users\jeeva\Downloads\churn image.jpg")
 col1,col2=st.columns(2)
 with col1:
     st.title("**Welcome to the Churn Prediction App!**")
-with col2:
-    #st.image(r"C:\Users\jeeva\Downloads\inno.png")
 
 dic = {}
 
