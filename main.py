@@ -227,7 +227,7 @@ if selected == "Home":
             
             
                 try:
-                    result = model.predict(df[:1000])
+                    result = model.predict(df)
                     churn = ["Yes" if pred == 1 else "No" for pred in result]
                     df["churn"] = churn
 
