@@ -22,7 +22,7 @@ with st.sidebar:
 # Pages based on selected option
 if selected == "Home":
     st.title("**Welcome to the Churn Prediction App!**")
-    st.image("sankarf_adhar.jpg", caption='Sankarf Adhar')
+    st.image("sankarf_adhar.jpg")
 
     
 
