@@ -23,7 +23,7 @@ with st.sidebar:
 if selected == "Home":
     st.title("**Welcome to the Churn Prediction App!**")
 
-    if st.buttone("view"):
+    if st.button("view"):
         
         image_path = 'a.jpg'
         st.image(image_path, caption='Sample Image')
