@@ -22,9 +22,22 @@ with st.sidebar:
 # Pages based on selected option
 if selected == "Home":
     st.title("**Welcome to the Churn Prediction App!**")
-    st.image('a.jpg')
-
+    image_path = 'a.jpg'
+    st.image(image_path, caption='Sample Image')
     
+    # Read the image file in binary mode
+    with open(image_path, "rb") as file:
+        image_bytes = file.read()
+    
+    # Provide a download button
+    st.download_button(
+        label="Download Image",
+        data=image_bytes,
+        file_name="a.jpg",
+        mime="image/jpeg"
+    )
+    
+        
 
 
     prediction_method = st.radio('Select Prediction Method', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
