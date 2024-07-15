@@ -6,7 +6,8 @@ import pickle
 import streamlit as st
 import time
 from streamlit_option_menu import option_menu
-import datetime
+import streamlit as st
+from datetime import datetime
 
 
 df=None
@@ -280,8 +281,7 @@ elif selected == "Data":
     st.pyplot()
 
 
-import streamlit as st
-from datetime import datetime
+
 
 
 elif selected == "About":
