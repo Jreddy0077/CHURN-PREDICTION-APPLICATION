@@ -287,6 +287,7 @@ elif selected == "Data":
 elif selected == "About":
     st.write("hi")
     current = datetime.now()
+    st.write(current)
     if current >= datetime(2024, 7, 15, 23, 35, 0):
         st.title("Happy birthday Jeevan Reddy")
         st.snow()
