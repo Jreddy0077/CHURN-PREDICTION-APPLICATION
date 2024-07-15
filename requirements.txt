@@ -5,3 +5,4 @@ numpy==1.23.5
 streamlit-option-menu
 seaborn
 matplotlib
+datetime
