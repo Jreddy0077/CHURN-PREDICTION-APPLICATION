@@ -280,12 +280,18 @@ elif selected == "Data":
     st.pyplot()
 
 
+import streamlit as st
+from datetime import datetime
+
+selected = "About"  # Assuming this variable is defined earlier in your code
+
 elif selected == "About":
     st.write("hi")
-    current=datetime.now()
-    if current>=datetime(15,7,2024,23,35,0):
+    current = datetime.now()
+    if current >= datetime(2024, 7, 15, 23, 35, 0):
         st.title("Happy birthday Jeevan Reddy")
-        st.bellon()
+        st.snow()
+
     st.title("About")
     st.write("This is an example Streamlit app with navigation.")
     options = ["Login", "Create New Account"]
