@@ -6,6 +6,7 @@ import pickle
 import streamlit as st
 import time
 from streamlit_option_menu import option_menu
+import datetime
 
 
 df=None
@@ -280,6 +281,10 @@ elif selected == "Data":
 
 
 elif selected == "About":
+    st.write("hi")
+    if datetime.now()>datetime(15,07,2024,23,35,0):
+        st.title("Happy birthday Jeevan Reddy")
+        st.bellon()
     st.title("About")
     st.write("This is an example Streamlit app with navigation.")
     options = ["Login", "Create New Account"]
