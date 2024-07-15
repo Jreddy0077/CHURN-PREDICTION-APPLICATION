@@ -283,7 +283,6 @@ elif selected == "Data":
 import streamlit as st
 from datetime import datetime
 
-selected = "About"  # Assuming this variable is defined earlier in your code
 
 elif selected == "About":
     st.write("hi")
