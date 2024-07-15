@@ -282,7 +282,8 @@ elif selected == "Data":
 
 elif selected == "About":
     st.write("hi")
-    if datetime.now()>datetime(15,7,2024,23,35,0):
+    current=datetime.now()
+    if current>=datetime(15,7,2024,23,35,0):
         st.title("Happy birthday Jeevan Reddy")
         st.bellon()
     st.title("About")
