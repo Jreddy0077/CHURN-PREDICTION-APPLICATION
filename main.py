@@ -11,6 +11,26 @@ from datetime import datetime
 
 
 df=None
+
+
+
+import pymysql
+
+conn = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='1234',
+    database='geeks'
+)
+
+c=conn.cursor()
+c.execute("SELECT Color FROM phones limit 1")
+
+result = c.fetchall()
+
+# Close the connection
+conn.close()
+
 # Navigation menu
 with st.sidebar:
     selected = option_menu(
@@ -23,6 +43,8 @@ with st.sidebar:
 
 # Pages based on selected option
 if selected == "Home":
+    st.write("Color:", result[0][0])
+
     st.title("**Welcome to the Churn Prediction App!**")
 
     
