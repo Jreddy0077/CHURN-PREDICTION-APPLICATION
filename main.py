@@ -7,14 +7,6 @@ import pickle
 import streamlit as st
 import time
 
-df=None
-
-
-
-
-
-
-
 # Navigation menu
 with st.sidebar:
     selected = option_menu(
@@ -28,13 +20,6 @@ with st.sidebar:
 # Pages based on selected option
 if selected == "Home":
     st.title("**Welcome to the Churn Prediction App!**")
- 
-
-
-    
-    
-
-
     prediction_method = st.radio('Select Prediction Method', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
 
     if prediction_method=='Predict Churn Record-wise':
