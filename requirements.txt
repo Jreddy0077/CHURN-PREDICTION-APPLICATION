@@ -6,6 +6,3 @@ streamlit-option-menu
 seaborn
 matplotlib
 datetime
-pymysql
-re
-base64
