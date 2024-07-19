@@ -7,6 +7,14 @@ import pickle
 import streamlit as st
 import time
 
+df=None
+
+
+
+
+
+
+
 # Navigation menu
 with st.sidebar:
     selected = option_menu(
@@ -20,6 +28,13 @@ with st.sidebar:
 # Pages based on selected option
 if selected == "Home":
     st.title("**Welcome to the Churn Prediction App!**")
+ 
+
+
+    
+    
+
+
     prediction_method = st.radio('Select Prediction Method', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
 
     if prediction_method=='Predict Churn Record-wise':
@@ -247,15 +262,8 @@ if selected == "Home":
                 
 
 
-
-
-
-
-
-
-
-
 elif selected == "Data":
+
     st.set_option('deprecation.showPyplotGlobalUse', False)
 
     df = pd.read_csv("df.csv")
@@ -279,8 +287,7 @@ elif selected == "Data":
 
 
 elif selected == "Register/Login/Profile":
-
-# Path to your background image
+    # Path to your background image
     bg_image_path = r"login_image.jpg"
     import base64
 
@@ -313,92 +320,91 @@ elif selected == "Register/Login/Profile":
     #st.title("hi")
 
 
-procees_for_registration=True
 
 
-with st.container():
-    st.markdown('<p style="color:red;">To access the app please Login or Signup</p>', unsafe_allow_html=True)
-    st.markdown('<p style="color:red;">Select an option:</p>', unsafe_allow_html=True)
-    option = st.selectbox('', ("Signup", 'Login'))
+    with st.container():
+        st.markdown('<p style="color:red;">To access the app please Login or Signup</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color:red;">Select an option:</p>', unsafe_allow_html=True)
+        option = st.selectbox('', ("Signup", 'Login'))
 
-import streamlit as st
-import re
-import pandas as pd
+    import streamlit as st
+    import re
+    import pandas as pd
 
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-if option == "Signup":
-    with col1:
-        st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
-        first_name = st.text_input("", key="first_name")
-        st.markdown('<p style="color:gold;">Enter The Surname:</p>', unsafe_allow_html=True)
-        sur_name = st.text_input("", key="sur_name")
-        st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
-        mail = st.text_input("", key="mail")
+    if option == "Signup":
+        with col1:
+            st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
+            first_name = st.text_input("", key="first_name")
+            st.markdown('<p style="color:gold;">Enter The Surname:</p>', unsafe_allow_html=True)
+            sur_name = st.text_input("", key="sur_name")
+            st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
+            mail = st.text_input("", key="mail")
 
-        def is_valid_email(email):
-            pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-            return pattern.match(email) is not None
+            def is_valid_email(email):
+                pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                return pattern.match(email) is not None
 
-        if is_valid_email(mail):
-            st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
-            mail_val = True
+            if is_valid_email(mail):
+                st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
+                mail_val = True
+            else:
+                st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
+                mail_val = False
+
+            def is_valid_password(password):
+                pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$')
+                return pattern.match(password) is not None
+
+            st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
+            password = st.text_input("", key="password", type="password")
+
+            if is_valid_password(password):
+                st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
+                password_val = True
+            else:
+                st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
+                password_val = False
+
+            st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
+            c_password = st.text_input("", key="c_password", type="password")
+
+            if c_password == password:
+                st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
+                c_password_val = True
+            else:
+                st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
+                c_password_val = False
+
+        with col2:
+            st.markdown('<p style="color:gold;">Enter The Last Name:</p>', unsafe_allow_html=True)
+            last_name = st.text_input("", key="last_name")
+            st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
+            number = st.text_input("", key="number")
+
+            if number.isnumeric() and number[0] in "9876" and len(number) == 10:
+                st.markdown('<p style="color:green;">Number is valid</p>', unsafe_allow_html=True)
+                number_val = True
+            else:
+                st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
+                number_val = False
+
+    if st.button("Register"):
+        if c_password_val and password_val and mail_val and number_val:
+
+            try:
+                df_user = pd.read_csv("df_user.csv")
+                st.write(df_user)
+
+            except FileNotFoundError:
+                df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
+
+            new_user = [first_name, last_name, sur_name, number, mail, password]
+            df_user.loc[len(df_user)] = new_user
+
+            df_user.to_csv("df_user.csv", index=False)
+            st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
         else:
-            st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
-            mail_val = False
-
-        def is_valid_password(password):
-            pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$')
-            return pattern.match(password) is not None
-
-        st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
-        password = st.text_input("", key="password", type="password")
-
-        if is_valid_password(password):
-            st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
-            password_val = True
-        else:
-            st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
-            password_val = False
-
-        st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
-        c_password = st.text_input("", key="c_password", type="password")
-
-        if c_password == password:
-            st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
-            c_password_val = True
-        else:
-            st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
-            c_password_val = False
-
-    with col2:
-        st.markdown('<p style="color:gold;">Enter The Last Name:</p>', unsafe_allow_html=True)
-        last_name = st.text_input("", key="last_name")
-        st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
-        number = st.text_input("", key="number")
-
-        if number.isnumeric() and number[0] in "9876" and len(number) == 10:
-            st.markdown('<p style="color:green;">Number is valid</p>', unsafe_allow_html=True)
-            number_val = True
-        else:
-            st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
-            number_val = False
-
-if st.button("Register"):
-    if c_password_val and password_val and mail_val and number_val:
-
-        try:
-            df_user = pd.read_csv("df_user.csv")
-            st.write(df_user)
-
-        except FileNotFoundError:
-            df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
-
-        new_user = [first_name, last_name, sur_name, number, mail, password]
-        df_user.loc[len(df_user)] = new_user
-
-        df_user.to_csv("df_user.csv", index=False)
-        st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
-    else:
-        st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
+            st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
