@@ -491,7 +491,8 @@ elif selected == "Register/Login/Profile":
             
            
 
-            
+            df_user = pd.read_csv("df_user.csv")
+
             l_password = list(df_user["password"])
 
             l_number = list(df_user["number"])
@@ -518,7 +519,6 @@ elif selected == "Register/Login/Profile":
             # except FileNotFoundError:
                     #df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
                 
-                df_user = pd.read_csv("df_user.csv")
                 #st.write(df_user)
 
 
