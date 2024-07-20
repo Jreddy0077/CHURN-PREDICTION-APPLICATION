@@ -315,10 +315,7 @@ elif selected == "Register/Login/Profile":
         </style>
         """, unsafe_allow_html=True)
 
-    # Your Streamlit app content
-    #st.markdown('<style>body { margin: 0; padding: 0; overflow: hidden; }</style>', unsafe_allow_html=True)
-   # import streamlit as st
-
+   
     
 
     st.markdown('<h2 style="color:orange;">Welcome To Churn Prediction Application</h2>', unsafe_allow_html=True)
@@ -475,6 +472,7 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
                 c_password_val = False
+            st.write(df_user)
             
 
         if st.button("Register"):
@@ -509,6 +507,10 @@ elif selected == "Register/Login/Profile":
 
             # except FileNotFoundError:
                     #df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
+                
+                df_user = pd.read_csv("df_user.csv")
+                st.write(df_user)
+
 
                 new_user = [first_name, last_name, sur_name, (number), mail, password]
                 df_user.loc[len(df_user)] = new_user
