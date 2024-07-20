@@ -68,7 +68,7 @@ if selected == "Home":
                 with c1:
                     international_plan=st.selectbox("international_plan",("yes","no"))
                     
-                    voice_mail_yes=st.selectbox("voice_mail_yes",("yes","no"))
+                    voice_mail=st.selectbox("voice_mail",("yes","no"))
                         
                 variables = [
                     'account_length', 'number_vmail_messages', 'total_day_minutes',
@@ -116,7 +116,7 @@ if selected == "Home":
                 l.insert(0, selected_states)
                 l.insert(2, selected_code)
                 l.insert(3, international_plan)
-                l.insert(4, voice_mail_plan)
+                l.insert(4, voice_mail)
                 
                 data2 = [l]
         
