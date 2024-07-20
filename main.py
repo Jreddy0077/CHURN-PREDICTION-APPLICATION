@@ -390,7 +390,7 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
                 number_val = False
-            st.write(df_user)
+            #st.write(df_user)
 
 
     if st.button("Register"):
