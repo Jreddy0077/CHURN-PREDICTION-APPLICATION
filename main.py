@@ -517,7 +517,7 @@ elif selected == "Register/Login/Profile":
 
 
 
-                df_user.to_csv("df_user.csv", index=False)
+                df_user.to_csv("df_user.csv")
 
                 
                 st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
