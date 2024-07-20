@@ -399,9 +399,9 @@ elif selected == "Register/Login/Profile":
         df_user = pd.read_csv("df_user.csv")
         
         
-        l_number = df_user["number"].astype(str).tolist()
-        l_mail = df_user["mail"].astype(str).tolist()
-        l_password = df_user["password"].astype(str).tolist()
+        l_number = list(df_user["number"])
+        l_mail = list(df_user["mail"])
+        l_password = list(df_user["password"])
         
         
         # Check for existing registration
@@ -426,8 +426,7 @@ elif selected == "Register/Login/Profile":
             df_user.loc[len(df_user)] = new_user
 
             df_user.to_csv("df_user.csv", index=False)
-            st.write(l_number)
-            st.write(df_user.info())
+            
             st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
         else:
             st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
