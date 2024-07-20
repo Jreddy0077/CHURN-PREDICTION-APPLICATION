@@ -390,27 +390,28 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
                 number_val = False
-        df_user = pd.read_csv("df_user.csv")
-        if number in df_user["number"]:
-            st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
-        if mail in df_user["mail"]:
-            st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
-        if password in df_user["password"]:
-            st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
-
-
+        
         
 
 
     if st.button("Register"):
-        if c_password_val and password_val and mail_val and number_val:
+        df_user = pd.read_csv("df_user.csv")
+        if number in df_user["number"]:
+            st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
+        elif mail in df_user["mail"]:
+            st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
+        elif password in df_user["password"]:
+            st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
 
-            try:
-                df_user = pd.read_csv("df_user.csv")
-                st.write(df_user)
 
-            except FileNotFoundError:
-                df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
+        elif c_password_val and password_val and mail_val and number_val:
+
+            ##try:
+                #df_user = pd.read_csv("df_user.csv")
+               # st.write(df_user)
+
+           # except FileNotFoundError:
+                #df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
 
             new_user = [first_name, last_name, sur_name, number, mail, password]
             df_user.loc[len(df_user)] = new_user
