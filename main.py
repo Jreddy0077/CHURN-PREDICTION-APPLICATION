@@ -379,17 +379,14 @@ elif selected == "Register/Login/Profile":
                         if st.button("Login"):
                             if mobile and passs:
                                 st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
-                                profile=True
                             else:
                                 st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
-                                profile=False
                         
                             
 
 
     if option == "Signup":
         with col1:
-            st.write(profile)
             st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
             first_name = st.text_input("", key="first_name")
             st.markdown('<p style="color:gold;">Enter The Surname:</p>', unsafe_allow_html=True)
