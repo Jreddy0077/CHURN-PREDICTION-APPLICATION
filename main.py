@@ -355,7 +355,7 @@ elif selected == "Register/Login/Profile":
                 mail_val = False
 
             def is_valid_password(password):
-                pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$')
+                pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d#@$!%*?&]{8,16}$')
                 return pattern.match(password) is not None
 
             st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
