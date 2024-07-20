@@ -534,6 +534,6 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
 elif selected == "history":
-    df_user=pd.DataFrame(columns=[columns=['first_name', 'last_name', 'sur_name', 'contact', 'mail', 'password']]
+    df_user=pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'contact', 'mail', 'password'])
     df_user.to_csv("df_user.csv")
 
