@@ -395,6 +395,10 @@ elif selected == "Register/Login/Profile":
 
 
     if st.button("Register"):
+        df_user.reset_index(drop=True, inplace=True)
+
+# Display the DataFrame without the index
+        st.dataframe(df_user)
 
         # Load the DataFrame
         df_user = pd.read_csv("df_user.csv")
