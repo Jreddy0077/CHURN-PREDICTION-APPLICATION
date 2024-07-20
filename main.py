@@ -536,4 +536,5 @@ elif selected == "Register/Login/Profile":
 elif selected == "history":
     df_user=pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'contact', 'mail', 'password'])
     df_user.to_csv("df_user.csv")
+    st.write("df_user")
 
