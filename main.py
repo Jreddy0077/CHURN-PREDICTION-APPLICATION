@@ -484,7 +484,7 @@ elif selected == "Register/Login/Profile":
                 st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
                 c_password_val = False
             
-            #st.write(df_user)
+            st.write(df_user)
             
 
         if st.button("Register"):
@@ -512,15 +512,9 @@ elif selected == "Register/Login/Profile":
 
             elif c_password_val and password_val and mail_val and number_val:
 
-                ##try:
-                    #df_user = pd.read_csv("df_user.csv")
-                # st.write(df_user)
-
-            # except FileNotFoundError:
-                    #df_user = pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'number', 'mail', 'password'])
                 
-                #st.write(df_user)
-
+                df_user = pd.read_csv("df_user.csv")
+              
 
                 new_user = [first_name, last_name, sur_name, (number), mail, password]
                 df_user.loc[len(df_user)] = new_user
