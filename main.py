@@ -426,8 +426,7 @@ elif selected == "Register/Login/Profile":
             df_user.loc[len(df_user)] = new_user
 
             df_user.to_csv("df_user.csv", index=False)
-            st.write(list(df_user["number"].values))
-            st.write(df_user)
+            st.write(l_number)
             st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
         else:
             st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
