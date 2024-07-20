@@ -346,19 +346,20 @@ elif selected == "Register/Login/Profile":
                         st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
                         number = st.text_input("", key="number")   
 
-                        #df_user = pd.read_csv("df_user.csv")
-                        #df_user["number"]=df_user["number"].astype("str")
+                        
                         l_number = list(df_user["number"])
-                        if number in l_number:
-                            st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
-                            mobile=True
-                        else:
-                            st.markdown('<p style="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
+                        if number is not None:
+
+                 
+                            if number in l_number:
+                                st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
+                                mobile=True
+                            else:
+                                st.markdown('<p style="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
+                                mobile=Falsetyle="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
                             mobile=False
 
-                        #df_user = pd.read_csv("df_user.csv")
-                        #df_user["number"]=df_user["number"].astype("str")
-
+                       
 
 
                         st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
