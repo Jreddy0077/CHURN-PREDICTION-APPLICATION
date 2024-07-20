@@ -390,6 +390,8 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
                 number_val = False
+            st.write(df_user)
+
 
     if st.button("Register"):
         if c_password_val and password_val and mail_val and number_val:
@@ -405,6 +407,7 @@ elif selected == "Register/Login/Profile":
             df_user.loc[len(df_user)] = new_user
 
             df_user.to_csv("df_user.csv", index=False)
+            st.write(df_user)
             st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
         else:
             st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
