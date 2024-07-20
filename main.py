@@ -363,11 +363,7 @@ elif selected == "Register/Login/Profile":
 
                         st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
                         password= st.text_input("", key="password",type="password")
-
-                        if password is not None:
-                            
-                        
-
+                        if password is not None and number is not None:
                             if df_user[df_user["number"]==number]["password"][0]==password:
                                 st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
                                 passs=True
