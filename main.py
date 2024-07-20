@@ -66,23 +66,11 @@ if selected == "Home":
                     selected_code = st.selectbox("**select an area code**", area_codes)
         
                 with c1:
-                    international_yes = st.checkbox("International Plan - Yes", key="international_yes")
-                    international_no = st.checkbox("International Plan - No", key="international_no")
-                    if international_yes and international_no:
-                        st.write("Please select only one option for international plan.")
-                    elif international_yes:
-                        international_plan = "yes"
-                    elif international_no:
-                        international_plan = "no"
+                    international_plan=st.selectbox("selct ",("yes","no"))
+                    
                 with c1:
-                    voice_mail_yes = st.checkbox("Voice Mail Plan - Yes", key="voice_mail_yes")
-                    voice_mail_no = st.checkbox("Voice Mail Plan - No", key="voice_mail_no")
-                    if voice_mail_yes and voice_mail_no:
-                        st.write("Please select only one option for voice mail plan.")
-                    elif voice_mail_yes:
-                        voice_mail_plan = "yes"
-                    elif voice_mail_no:
-                        voice_mail_plan = "no"
+                    voice_mail_yes=st.selectbox("selct ",("yes","no"))
+                        
                 variables = [
                     'account_length', 'number_vmail_messages', 'total_day_minutes',
                     'total_day_calls', 'total_day_charge', 'total_eve_minutes',
@@ -143,11 +131,6 @@ if selected == "Home":
                     'total_charge', 'plan_day', 'plan_weeks', 'plan_years', 'charge_day']
         
                 df2= pd.DataFrame(data2, columns=columns)
-        
-        
-        
-        
-        
                 import os
         
         
