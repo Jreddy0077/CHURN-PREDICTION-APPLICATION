@@ -6,3 +6,4 @@ streamlit-option-menu
 seaborn
 matplotlib
 datetime
+streamlit-lottie
