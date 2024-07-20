@@ -396,11 +396,15 @@ elif selected == "Register/Login/Profile":
 
     if st.button("Register"):
         df_user = pd.read_csv("df_user.csv")
-        if number in df_user["number"]:
+        l_number=[number1 for number1 in df_user["number"]]
+        l_mail=[mail1 for mail1 in df_user["mail"]]
+        l_password=[pssword1 for password1 in df_user["password"]]
+
+        if number in l_number:
             st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
-        elif mail in df_user["mail"]:
+        elif mail in l_mail:
             st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
-        elif password in df_user["password"]:
+        elif password in l_password:
             st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
 
 
