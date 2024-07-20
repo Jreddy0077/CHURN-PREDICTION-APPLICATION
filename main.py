@@ -344,7 +344,9 @@ elif selected == "Register/Login/Profile":
                     with col1:
 
                         st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
-                        number = st.text_input("", key="number")   
+                        number=None
+                        number = st.text_input("", key="number")
+                        
 
                         
                         l_number = list(df_user["number"])
