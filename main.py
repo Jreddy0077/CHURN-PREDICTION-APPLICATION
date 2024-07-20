@@ -357,7 +357,7 @@ elif selected == "Register/Login/Profile":
                             else:
                                 st.markdown('<p style="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
                                 mobile=Falsetyle="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
-                            mobile=False
+                                mobile=False
 
                        
 
