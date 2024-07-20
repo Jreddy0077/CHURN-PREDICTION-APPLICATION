@@ -46,6 +46,7 @@ if selected == "Home":
         }}
         </style>
         """, unsafe_allow_html=True)
+        dic=()
 
         st.title("**Welcome to the Churn Prediction App!**")
         prediction_method = st.radio('Select Prediction Method', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
