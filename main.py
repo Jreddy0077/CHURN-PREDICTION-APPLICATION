@@ -34,6 +34,25 @@ with st.sidebar:
 
 # Pages based on selected option
 if selected == "Home":
+        bg_image_path = r"home_bg.jpg"
+
+    
+    bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+
+    st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{bg_image_base64}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
+
+
+
+        
     st.title("**Welcome to the Churn Prediction App!**")
  
 
