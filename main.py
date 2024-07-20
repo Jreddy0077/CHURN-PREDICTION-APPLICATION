@@ -35,11 +35,8 @@ with st.sidebar:
 # Pages based on selected option
 if selected == "Home":
         bg_image_path = r"home_bg.jpg"
-
-    
-    bg_image_base64 = get_base64_of_bin_file(bg_image_path)
-
-    st.markdown(f"""
+        bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+        st.markdown(f"""
         <style>
         .stApp {{
             background-image: url("data:image/jpg;base64,{bg_image_base64}");
@@ -50,20 +47,9 @@ if selected == "Home":
         </style>
         """, unsafe_allow_html=True)
 
-
-
-        
-    st.title("**Welcome to the Churn Prediction App!**")
- 
-
-
-    
-    
-
-
-    prediction_method = st.radio('Select Prediction Method', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
-
-    if prediction_method=='Predict Churn Record-wise':
+        st.title("**Welcome to the Churn Prediction App!**")
+        prediction_method = st.radio('Select Prediction Method', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
+        if prediction_method=='Predict Churn Record-wise':
 
 
 
