@@ -287,12 +287,12 @@ elif selected == "Data":
 
 
 elif selected == "Register/Login/Profile":
-    df_user = pd.read_csv("df_user.csv")
+    #df_user = pd.read_csv("df_user.csv")
 
-    df_user['number'] = df_user['number'].astype(str)
+    #df_user['number'] = df_user['number'].astype(str)
 
 
-    df_user.to_csv("df_user.csv", index=False)
+    #df_user.to_csv("df_user.csv", index=False)
 
     bg_image_path = r"login_image.jpg"
     import base64
@@ -340,6 +340,14 @@ elif selected == "Register/Login/Profile":
     if option=="Login":
                     with col1:
 
+                        df_user = pd.read_csv("df_user.csv")
+
+                        df_user['number'] = df_user['number'].astype(str)
+
+
+                        df_user.to_csv("df_user.csv", index=False)
+
+
                         st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
                         number = st.text_input("", key="number")
                         l_number = list(df_user["number"].astype(str))
@@ -383,6 +391,9 @@ elif selected == "Register/Login/Profile":
 
 
     if option == "Signup":
+        df_user = pd.read_csv("df_user.csv")
+        df_user["number"]=df_user["number"].astype("str")
+
         with col1:
             st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
             first_name = st.text_input("", key="first_name")
@@ -472,14 +483,13 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
                 c_password_val = False
+            
             st.write(df_user)
             
 
         if st.button("Register"):
             
-            df_user = pd.read_csv("df_user.csv")
-            df_user["number"]=df_user["number"].astype("str")
-
+           
 
             
             l_password = list(df_user["password"])
@@ -517,7 +527,7 @@ elif selected == "Register/Login/Profile":
 
 
 
-                df_user.to_csv("df_user.csv")
+                df_user.to_csv("df_user.csv",index=False)
 
                 
                 st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
