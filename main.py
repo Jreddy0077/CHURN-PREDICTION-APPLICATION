@@ -398,6 +398,7 @@ elif selected == "Register/Login/Profile":
         df_user = pd.read_csv("df_user.csv")
 
         df_user.reset_index(drop=True, inplace=True)
+        df_user.to_csv("df_user.csv", index=False)
 
 # Display the DataFrame without the index
         st.dataframe(df_user)
