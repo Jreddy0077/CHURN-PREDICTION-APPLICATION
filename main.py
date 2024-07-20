@@ -363,21 +363,24 @@ elif selected == "Register/Login/Profile":
 
                         st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
                         password= st.text_input("", key="password",type="password")
+
+                        if password is not None:
+                            
                         
 
-                        if df_user[df_user["number"]==number]["password"][0]==password:
-                            st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                            passs=True
-                        else:
-                            st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-                            passs=False
-
-                        if st.button("Login"):
-                            if mobile and passs:
-                                st.markdown('<p style="color:gold;">Sucessfully Loged In</p>', unsafe_allow_html=True)
+                            if df_user[df_user["number"]==number]["password"][0]==password:
+                                st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                                passs=True
                             else:
-                                st.markdown('<p style="color:gold;">Enter The Detailes Correctly</p>', unsafe_allow_html=True)
-
+                                st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                                passs=False
+    
+                            if st.button("Login"):
+                                if mobile and passs:
+                                    st.markdown('<p style="color:gold;">Sucessfully Loged In</p>', unsafe_allow_html=True)
+                                else:
+                                    st.markdown('<p style="color:gold;">Enter The Detailes Correctly</p>', unsafe_allow_html=True)
+    
 
 
 
