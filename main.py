@@ -392,7 +392,7 @@ elif selected == "Register/Login/Profile":
 
     if option == "Signup":
         df_user = pd.read_csv("df_user.csv")
-        df_user["number"]=df_user["number"].astype("str")
+        #df_user["number"]=df_user["number"].astype("str")
 
         with col1:
             st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
