@@ -344,45 +344,45 @@ elif selected == "Register/Login/Profile":
                     with col1:
 
                         st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
-                        number=None
-                        password=None
                         number = st.text_input("", key="number")
-                        l_number = list(df_user["number"])
+                        l_number = list(df_user["number"].astype(str))
                         
-                        mobile=False
+                        # Initialize mobile check
+                        mobile = False
+                        
+                        # Check if the number is in the list
                         if number in l_number:
                             st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
-                            mobile=True
+                            mobile = True
                         else:
-                            st.markdown('<p style="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
-
-                       
-
-
-                        st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
-                        password= st.text_input("", key="password",type="password")
-                        passs=False
-                        if mobile:
-                            password_org=df_user[df_user["number"]==number]["password"][0]
-
+                            st.markdown('<p style="color:gold;">Incorrect Mobile Number</p>', unsafe_allow_html=True)
                         
-                        if password_org==password:
-                            st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                            passs=True
-                        else:
-                            st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-
+                        # UI for password input
+                        st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
+                        password = st.text_input("", key="password", type="password")
+                        
+                        # Initialize password check
+                        passs = False
+                        
+                        if mobile:
+                            # Get the original password for the entered number
+                            password_org = df_user[df_user["number"] == number]["password"].values[0]
+                        
+                            # Check if the entered password matches the original password
+                            if password_org == password:
+                                st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                                passs = True
+                            else:
+                                st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                        
+                        # Check login button
                         if st.button("Login"):
                             if mobile and passs:
-                                st.markdown('<p style="color:gold;">Sucessfully Loged In</p>', unsafe_allow_html=True)
+                                st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
                             else:
-                                st.markdown('<p style="color:gold;">Enter The Detailes Correctly</p>', unsafe_allow_html=True)
-
-
-
-
-
-    
+                                st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
+                        
+                            
 
 
     if option == "Signup":
