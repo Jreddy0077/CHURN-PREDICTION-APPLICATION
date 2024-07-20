@@ -18,7 +18,18 @@ def get_base64_of_bin_file(bin_file):
 
 
 
+st.set_page_config(layout="wide")
 
+# Custom CSS to remove padding and margins
+custom_css = """
+    <style>
+    .css-1d391kg, .css-1v3fvcr, .css-18e3th9 {
+        padding: 0 !important;
+    }
+    </style>
+"""
+
+st.markdown(custom_css, unsafe_allow_html=True)
 
 
 
