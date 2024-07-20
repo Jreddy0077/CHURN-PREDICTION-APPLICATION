@@ -345,16 +345,13 @@ elif selected == "Register/Login/Profile":
 
                         st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
                         number=None
+                        password=None
                         number = st.text_input("", key="number")
-                        
-
-                        
                         l_number = list(df_user["number"])
                         
                  
                         if number in l_number:
                             st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
-                            password_org=df_user[df_user["number"]==number]["password"][0]
                             mobile=True
                         else:
                             st.markdown('<p style="color:gold;">Incorrect Mobile NUmber</p>', unsafe_allow_html=True)
@@ -365,6 +362,9 @@ elif selected == "Register/Login/Profile":
 
                         st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
                         password= st.text_input("", key="password",type="password")
+                        if mobile:
+                            password_org=df_user[df_user["number"]==number]["password"][0]
+
                         
                         if password_org==password:
                             st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
