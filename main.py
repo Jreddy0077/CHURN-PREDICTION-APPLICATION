@@ -66,10 +66,9 @@ if selected == "Home":
                     selected_code = st.selectbox("**select an area code**", area_codes)
         
                 with c1:
-                    international_plan=st.selectbox("selct ",("yes","no"))
+                    international_plan=st.selectbox("international_plan",("yes","no"))
                     
-                with c1:
-                    voice_mail_yes=st.selectbox("selct ",("yes","no"))
+                    voice_mail_yes=st.selectbox("voice_mail_yes",("yes","no"))
                         
                 variables = [
                     'account_length', 'number_vmail_messages', 'total_day_minutes',
