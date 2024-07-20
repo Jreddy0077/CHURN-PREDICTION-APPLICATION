@@ -395,16 +395,9 @@ elif selected == "Register/Login/Profile":
 
 
     if st.button("Register"):
+        
         df_user = pd.read_csv("df_user.csv")
-
-        df_user.reset_index(drop=True, inplace=True)
-        df_user.to_csv("df_user.csv", index=False)
-
-# Display the DataFrame without the index
-        st.dataframe(df_user)
-
-        # Load the DataFrame
-        df_user = pd.read_csv("df_user.csv")
+        
         
         l_number = df_user["number"].astype(str).tolist()
         l_mail = df_user["mail"].astype(str).tolist()
@@ -434,6 +427,7 @@ elif selected == "Register/Login/Profile":
 
             df_user.to_csv("df_user.csv", index=False)
             st.write(l_number)
+            st.write(df_user.info())
             st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
         else:
             st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
