@@ -390,7 +390,16 @@ elif selected == "Register/Login/Profile":
             else:
                 st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
                 number_val = False
-            #st.write(df_user)
+    df_user = pd.read_csv("df_user.csv")
+    if number in df["number"]:
+        st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
+    if mail in df["mail"]:
+        st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
+    if password in df["password"]:
+        st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
+
+
+        
 
 
     if st.button("Register"):
