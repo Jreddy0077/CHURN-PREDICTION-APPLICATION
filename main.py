@@ -409,12 +409,12 @@ elif selected == "Register/Login/Profile":
                     
                 
                     # Check if the entered password matches the original password
-                if password_org == password:
-                    st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                    passs = True
-                else:
-                    st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-                
+                    if password_org == password:
+                        st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                        passs = True
+                    else:
+                        st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                    
                 # Check login button
                 if st.button("Login"):
                     if mobile and passs:
