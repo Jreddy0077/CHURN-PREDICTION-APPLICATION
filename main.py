@@ -268,7 +268,7 @@ elif selected == "Data":
 
 
 elif selected == "Register/Login/Profile":
-         bg_image_path = r"login_image.jpg"
+        bg_image_path = r"login_image.jpg"
         import base64
         
         def get_base64_of_bin_file(bin_file):
