@@ -268,6 +268,26 @@ elif selected == "Data":
 
 
 elif selected == "Register/Login/Profile":
+         bg_image_path = r"login_image.jpg"
+        import base64
+        
+        def get_base64_of_bin_file(bin_file):
+        with open(bin_file, 'rb') as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+        
+        bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+        
+        st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{bg_image_base64}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
 ########################################################################3333333333
         db_user = '2yasPb2k6DKrXZH.root'
         db_password = 'E28f3eorNGjxx6K4'
@@ -308,27 +328,7 @@ elif selected == "Register/Login/Profile":
         except SQLAlchemyError as e:
             st.error(f"An error occurred: {str(e)}")
 #################################################################################
-    
-    bg_image_path = r"login_image.jpg"
-    import base64
-
-    def get_base64_of_bin_file(bin_file):
-        with open(bin_file, 'rb') as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
-
-    bg_image_base64 = get_base64_of_bin_file(bg_image_path)
-
-    st.markdown(f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/jpg;base64,{bg_image_base64}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        </style>
-        """, unsafe_allow_html=True)
+       st.write(df_user)
 ##############################################################################################
 
    
