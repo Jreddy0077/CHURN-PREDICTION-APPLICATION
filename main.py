@@ -10,8 +10,7 @@ from sqlalchemy import create_engine,text
 import pymysql
 from sqlalchemy.exc import SQLAlchemyError
 import re
-
-
+status=logout
 
 
 ####################################################################################
@@ -418,6 +417,8 @@ elif selected == "Register/Login/Profile":
                 # Check login button
                 if st.button("Login"):
                     if mobile and passs:
+                        global status
+                        status=login
                         st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
                     else:
                         st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
@@ -516,7 +517,7 @@ elif selected == "Register/Login/Profile":
                 st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
                 c_password_val = False
             
-            st.write(df_user)
+            #st.write(df_user)
             
 
             if st.button("Register"):
@@ -547,7 +548,7 @@ elif selected == "Register/Login/Profile":
 
 
 
-                    st.write(df_user)
+                    #st.write(df_user)
 
                     
                     st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
@@ -561,4 +562,5 @@ elif selected == "history":
     df_user=pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'contact', 'mail', 'password'])
     df_user.to_csv("df_user.csv")
     st.write(df_user)
+    st.write(status)
 
