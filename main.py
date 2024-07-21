@@ -6,9 +6,70 @@ import pickle
 import streamlit as st
 import time
 import base64
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,text
 import pymysql
 from sqlalchemy.exc import SQLAlchemyError
+import re
+
+
+
+
+####################################################################################
+
+db_user = '2yasPb2k6DKrXZH.root'
+db_password = 'E28f3eorNGjxx6K4'
+db_host = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com'
+db_port = '4000'
+db_name = 'test'
+ca_path = '/path/to/ca_cert.pem'  # Replace with the actual path to your CA certificate
+
+connection_string = (
+    f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?'
+    f'ssl_ca={ca_path}&ssl_verify_cert=true'
+)
+
+def add_user(first_name, last_name, sur_name, number, mail, password):
+    try:
+        engine = create_engine(connection_string)
+        conn = engine.connect()
+
+        insert_query =text("""
+            INSERT INTO users (first_name, last_name, sur_name, number, mail, password)
+            VALUES (:first_name, :last_name, :sur_name, :number, :mail, :password)
+        """)
+        
+        conn.execute(insert_query, {
+            'first_name': first_name,
+            'last_name': last_name,
+            'sur_name': sur_name,
+            'number': number,
+            'mail': mail,
+            'password': password
+        })
+        
+        conn.commit()
+        conn.close()
+        
+        st.success("User added successfully!")
+    except SQLAlchemyError as e:
+        st.error(f"An error occurred: {str(e)}")
+
+############################################################################
+
+
+
+try:
+    # Initialize connection
+    engine = create_engine(connection_string)
+    conn = engine.connect()
+    df_user= pd.read_sql('SELECT * FROM users', conn)
+
+    df_user['number'] = df_user['number'].astype(str)
+
+    conn.close()
+    engine.dispose()
+except SQLAlchemyError as e:
+    st.error(f"An error occurred: {str(e)}")
 
 
 
@@ -272,9 +333,9 @@ elif selected == "Register/Login/Profile":
         import base64
         
         def get_base64_of_bin_file(bin_file):
-        with open(bin_file, 'rb') as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
+            with open(bin_file, 'rb') as f:
+                 data = f.read()
+                 return base64.b64encode(data).decode()
         
         bg_image_base64 = get_base64_of_bin_file(bg_image_path)
         
@@ -289,74 +350,40 @@ elif selected == "Register/Login/Profile":
         </style>
         """, unsafe_allow_html=True)
 ########################################################################3333333333
-        db_user = '2yasPb2k6DKrXZH.root'
-        db_password = 'E28f3eorNGjxx6K4'
-        db_host = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com'
-        db_port = '4000'
-        db_name = 'test'
-        ca_path = '<CA_PATH>'  # Replace <CA_PATH> with the actual path to your CA certificate
         
-        # Create the connection string with SSL parameters
-        connection_string = (
-            f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?'
-            f'ssl_ca={ca_path}&ssl_verify_cert=true'
-        )
-
-        try:
-            # Initialize connection
-            engine = create_engine(connection_string)
-            conn = engine.connect()
-        
-            # Perform query
-        
-            # Perform query
-            df_user= pd.read_sql('SELECT * FROM users', conn)
-        
-            # Ensure 'number' column is treated as a string
-            df_user['number'] = df_user['number'].astype(str)
-        
-        
-            # Close connection
-            conn.close()
-            st.write(df)
-        
-        
-            # Close the engine
-            engine.dispose()
-            
-        
-        except SQLAlchemyError as e:
-            st.error(f"An error occurred: {str(e)}")
 #################################################################################
-       st.write(df_user)
+        l_number = list(df_user["number"])
+
 ##############################################################################################
 
    
     
 
-    st.markdown('<h2 style="color:orange;">Welcome To Churn Prediction Application</h2>', unsafe_allow_html=True)
+        st.markdown('<h2 style="color:orange;">Welcome To Churn Prediction Application</h2>', unsafe_allow_html=True)
 
 
 
 
 
-    with st.container():
-        st.markdown('<p style="color:red;">To access the app please Login or Signup</p>', unsafe_allow_html=True)
-        st.markdown('<p style="color:red;">Select an option:</p>', unsafe_allow_html=True)
-        option = st.selectbox('', ('Login',"Signup"))
+        with st.container():
+            st.markdown('<p style="color:red;">To access the app please Login or Signup</p>', unsafe_allow_html=True)
+            st.markdown('<p style="color:red;">Select an option:</p>', unsafe_allow_html=True)
+            option = st.selectbox('', ('Login',"Signup"))
 
-    import streamlit as st
-    import re
-    import pandas as pd
+        import streamlit as st
+        import re
+        import pandas as pd
 
 
-    col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
 
-    if option=="Login":
-            with col1:
+        if option=="Login":
+             with col1:
                 st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
                 number = st.text_input("", key="number")
-                l_number = list(df_user["number"])
+
+
+               
                 
                 # Initialize mobile check
                 mobile = False
@@ -376,15 +403,17 @@ elif selected == "Register/Login/Profile":
                 passs = False
                 
                 if mobile:
-                    # Get the original password for the entered number
                     password_org = df_user[df_user["number"] == number]["password"].values[0]
+
+                    # Get the original password for the entered number
+                    
                 
                     # Check if the entered password matches the original password
-                    if password_org == password:
-                        st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                        passs = True
-                    else:
-                        st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                if password_org == password:
+                    st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                    passs = True
+                else:
+                    st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
                 
                 # Check login button
                 if st.button("Login"):
@@ -396,70 +425,67 @@ elif selected == "Register/Login/Profile":
                     
 
 
-    if option == "Signup":
-        df_user = pd.read_csv("df_user.csv")
-        #df_user["number"]=df_user["number"].astype("str")
+        if option == "Signup":
+            with col1:
+                st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
+                first_name = st.text_input("", key="first_name")
+                st.markdown('<p style="color:gold;">Enter The Surname:</p>', unsafe_allow_html=True)
+                sur_name = st.text_input("", key="sur_name")
 
-        with col1:
-            st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
-            first_name = st.text_input("", key="first_name")
-            st.markdown('<p style="color:gold;">Enter The Surname:</p>', unsafe_allow_html=True)
-            sur_name = st.text_input("", key="sur_name")
+                st.markdown('<p style="color:gold;">Enter The Last Name:</p>', unsafe_allow_html=True)
+                last_name = st.text_input("", key="last_name")
+                st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
+                number = st.text_input("", key="number")
 
-            st.markdown('<p style="color:gold;">Enter The Last Name:</p>', unsafe_allow_html=True)
-            last_name = st.text_input("", key="last_name")
-            st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
-            number = st.text_input("", key="number")
+                if number.isnumeric() and number[0] in "9876" and len(number) == 10:
+                    st.markdown('<p style="color:green;">Number is valid</p>', unsafe_allow_html=True)
+                    number_val = True
+                else:
+                    st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
+                    number_val = False
 
-            if number.isnumeric() and number[0] in "9876" and len(number) == 10:
-                st.markdown('<p style="color:green;">Number is valid</p>', unsafe_allow_html=True)
-                number_val = True
-            else:
-                st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
-                number_val = False
+                st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
+                mail = st.text_input("", key="mail")
 
-            st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
-            mail = st.text_input("", key="mail")
+                def is_valid_email(email):
+                    pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                    return pattern.match(email) is not None
 
-            def is_valid_email(email):
-                pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                return pattern.match(email) is not None
+                if is_valid_email(mail):
+                    st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
+                    mail_val = True
+                else:
+                    st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
+                    mail_val = False
 
-            if is_valid_email(mail):
-                st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
-                mail_val = True
-            else:
-                st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
-                mail_val = False
+                def is_valid_password(password):
+                    pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
+                    return pattern.match(password) is not None
 
-            def is_valid_password(password):
-                pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
-                return pattern.match(password) is not None
+            from streamlit_lottie import st_lottie   
+            import json   
 
-        from streamlit_lottie import st_lottie   
-        import json   
+            with col2:
 
-        with col2:
+                
 
-            
+                def load_lottiefile(path):
+                    with open(path, "r") as f:
+                        return json.load(f)
 
-            def load_lottiefile(path):
-                with open(path, "r") as f:
-                    return json.load(f)
+                # Load Lottie file
+                lottie_path = r"User registration.mp4.lottie.json"
+                lottie_animation = load_lottiefile(lottie_path)
 
-            # Load Lottie file
-            lottie_path = r"User registration.mp4.lottie.json"
-            lottie_animation = load_lottiefile(lottie_path)
-
-            # Display Lottie animation
-            st_lottie(
-                lottie_animation,
-                speed=3,
-                reverse=False,
-                loop=True,
-                quality="high",
-               
-            )
+                # Display Lottie animation
+                st_lottie(
+                    lottie_animation,
+                    speed=3,
+                    reverse=False,
+                    loop=True,
+                    quality="high",
+                
+                )
 
 
 
@@ -493,47 +519,44 @@ elif selected == "Register/Login/Profile":
             st.write(df_user)
             
 
-        if st.button("Register"):
-            
-           
+            if st.button("Register"):
+                l_password = list(df_user["password"])
 
-            df_user = pd.read_csv("df_user.csv")
-
-            l_password = list(df_user["password"])
-
-            l_number = list(df_user["number"])
-            l_mail = list(df_user["mail"])
-            
-
-            
-            
-            # Check for existing registration
-            if (number) in l_number:
-                st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
-            elif mail in l_mail:
-                st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
-            elif password in l_password:
-                st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
-
-
-            elif c_password_val and password_val and mail_val and number_val:
+                l_number = list(df_user["number"])
+                l_mail = list(df_user["mail"])
+                
 
                 
-                df_user = pd.read_csv("df_user.csv")
-              
-
-                new_user = [first_name, last_name, sur_name, (number), mail, password]
-                df_user.loc[len(df_user)] = new_user
-
-
-
-                df_user.to_csv("df_user.csv",index=False)
-                st.write(df_user)
-
                 
-                st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
-            else:
-                st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
+                if (number) in l_number:
+                    st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
+                elif mail in l_mail:
+                    st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
+                elif password in l_password:
+                    st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
+
+
+                elif c_password_val and password_val and mail_val and number_val:
+
+                    
+                
+
+                    #new_user = [first_name, last_name, sur_name, (number), mail, password]
+
+                    add_user(first_name, last_name, sur_name, number, mail, password)
+
+
+
+                    st.write(df_user)
+
+                    
+                    st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
+                else:
+                    st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
+
+
+
+
 elif selected == "history":
     df_user=pd.DataFrame(columns=['first_name', 'last_name', 'sur_name', 'contact', 'mail', 'password'])
     df_user.to_csv("df_user.csv")
