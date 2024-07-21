@@ -268,13 +268,47 @@ elif selected == "Data":
 
 
 elif selected == "Register/Login/Profile":
-    #df_user = pd.read_csv("df_user.csv")
+########################################################################3333333333
+        db_user = '2yasPb2k6DKrXZH.root'
+        db_password = 'E28f3eorNGjxx6K4'
+        db_host = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com'
+        db_port = '4000'
+        db_name = 'test'
+        ca_path = '<CA_PATH>'  # Replace <CA_PATH> with the actual path to your CA certificate
+        
+        # Create the connection string with SSL parameters
+        connection_string = (
+            f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?'
+            f'ssl_ca={ca_path}&ssl_verify_cert=true'
+        )
 
-    #df_user['number'] = df_user['number'].astype(str)
-
-
-    #df_user.to_csv("df_user.csv", index=False)
-
+        try:
+            # Initialize connection
+            engine = create_engine(connection_string)
+            conn = engine.connect()
+        
+            # Perform query
+        
+            # Perform query
+            df_user= pd.read_sql('SELECT * FROM users', conn)
+        
+            # Ensure 'number' column is treated as a string
+            df_user['number'] = df_user['number'].astype(str)
+        
+        
+            # Close connection
+            conn.close()
+            st.write(df)
+        
+        
+            # Close the engine
+            engine.dispose()
+            
+        
+        except SQLAlchemyError as e:
+            st.error(f"An error occurred: {str(e)}")
+#################################################################################
+    
     bg_image_path = r"login_image.jpg"
     import base64
 
@@ -295,13 +329,13 @@ elif selected == "Register/Login/Profile":
         }}
         </style>
         """, unsafe_allow_html=True)
+##############################################################################################
 
    
     
 
     st.markdown('<h2 style="color:orange;">Welcome To Churn Prediction Application</h2>', unsafe_allow_html=True)
 
-    #st.title("hi")
 
 
 
@@ -319,56 +353,47 @@ elif selected == "Register/Login/Profile":
     col1, col2 = st.columns(2)
 
     if option=="Login":
-                    with col1:
-
-                        df_user = pd.read_csv("df_user.csv")
-
-                        df_user['number'] = df_user['number'].astype(str)
-
-
-                        df_user.to_csv("df_user.csv", index=False)
-
-
-                        st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
-                        number = st.text_input("", key="number")
-                        l_number = list(df_user["number"].astype(str))
-                        
-                        # Initialize mobile check
-                        mobile = False
-                        
-                        # Check if the number is in the list
-                        if number in l_number:
-                            st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
-                            mobile = True
-                        else:
-                            st.markdown('<p style="color:gold;">Incorrect Mobile Number</p>', unsafe_allow_html=True)
-                        
-                        # UI for password input
-                        st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
-                        password = st.text_input("", key="password", type="password")
-                        
-                        # Initialize password check
-                        passs = False
-                        
-                        if mobile:
-                            # Get the original password for the entered number
-                            password_org = df_user[df_user["number"] == number]["password"].values[0]
-                        
-                            # Check if the entered password matches the original password
-                            if password_org == password:
-                                st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                                passs = True
-                            else:
-                                st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-                        
-                        # Check login button
-                        if st.button("Login"):
-                            if mobile and passs:
-                                st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
-                            else:
-                                st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
-                        
-                            
+            with col1:
+                st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
+                number = st.text_input("", key="number")
+                l_number = list(df_user["number"])
+                
+                # Initialize mobile check
+                mobile = False
+                
+                # Check if the number is in the list
+                if number in l_number:
+                    st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
+                    mobile = True
+                else:
+                    st.markdown('<p style="color:gold;">Incorrect Mobile Number</p>', unsafe_allow_html=True)
+                
+                # UI for password input
+                st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
+                password = st.text_input("", key="password", type="password")
+                
+                # Initialize password check
+                passs = False
+                
+                if mobile:
+                    # Get the original password for the entered number
+                    password_org = df_user[df_user["number"] == number]["password"].values[0]
+                
+                    # Check if the entered password matches the original password
+                    if password_org == password:
+                        st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                        passs = True
+                    else:
+                        st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                
+                # Check login button
+                if st.button("Login"):
+                    if mobile and passs:
+                        st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
+                    else:
+                        st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
+                
+                    
 
 
     if option == "Signup":
