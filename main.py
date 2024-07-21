@@ -10,7 +10,6 @@ from sqlalchemy import create_engine,text
 import pymysql
 from sqlalchemy.exc import SQLAlchemyError
 import re
-status=logout
 
 
 ####################################################################################
@@ -417,8 +416,6 @@ elif selected == "Register/Login/Profile":
                 # Check login button
                 if st.button("Login"):
                     if mobile and passs:
-                        global status
-                        status=login
                         st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
                     else:
                         st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
