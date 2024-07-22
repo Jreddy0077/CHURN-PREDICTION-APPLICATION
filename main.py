@@ -538,20 +538,20 @@ elif selected == "Register/Login/Profile":
                     else:
                         st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
                 
-             with col3:
-                 if mobile and passs and profile:
-                    if st.button("Show Profile"):
-
-                        user_info = df_user[df_user["number"] == number].iloc[0]
-                        name = f"{user_info['first_name']} {user_info['last_name']} {user_info['sur_name']}"
-                        mail = user_info['mail']
-                        contact = number
-
-                        st.write("     ")
-                        st.markdown(f'<h3 style="color:red;">Name: {name}</h3>', unsafe_allow_html=True)
-                        st.markdown(f'<h3 style="color:red;">Contact: {contact}</h3 >', unsafe_allow_html=True)
-                        st.markdown(f'<h3  style="color:red;">Mail: {mail}</h3 >', unsafe_allow_html=True)
-                                
+                 with col3:
+                     if mobile and passs and profile:
+                        if st.button("Show Profile"):
+    
+                            user_info = df_user[df_user["number"] == number].iloc[0]
+                            name = f"{user_info['first_name']} {user_info['last_name']} {user_info['sur_name']}"
+                            mail = user_info['mail']
+                            contact = number
+    
+                            st.write("     ")
+                            st.markdown(f'<h3 style="color:red;">Name: {name}</h3>', unsafe_allow_html=True)
+                            st.markdown(f'<h3 style="color:red;">Contact: {contact}</h3 >', unsafe_allow_html=True)
+                            st.markdown(f'<h3  style="color:red;">Mail: {mail}</h3 >', unsafe_allow_html=True)
+                                    
 
                         
 
