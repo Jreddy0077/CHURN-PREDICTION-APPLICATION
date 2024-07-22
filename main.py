@@ -489,7 +489,8 @@ elif selected == "Register/Login/Profile":
 
 
        
-        
+
+
 
         if option=="Login":
              with col1:
@@ -528,23 +529,23 @@ elif selected == "Register/Login/Profile":
                         passs = True
                     else:
                         st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-                profile=False
+                    
                 # Check login button
                 if st.button("Login"):
                     if mobile and passs:
-                        profile=True
                         st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
                     else:
                         st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
                 
-            with col3:
-                if mobile and passs and profile:
+             with col3:
+                 if mobile and passs:
                     if st.button("Show Profile"):
+
                         user_info = df_user[df_user["number"] == number].iloc[0]
                         name = f"{user_info['first_name']} {user_info['last_name']} {user_info['sur_name']}"
                         mail = user_info['mail']
                         contact = number
-                
+
                         st.write("     ")
                         st.markdown(f'<h3 style="color:red;">Name: {name}</h3>', unsafe_allow_html=True)
                         st.markdown(f'<h3 style="color:red;">Contact: {contact}</h3 >', unsafe_allow_html=True)
@@ -760,4 +761,3 @@ elif selected == "About The Model":
 
 
     st.markdown('<p style="color:red;font-weight:bold;">Based On The  Cross Validation Scores We Finallized Decision Tree Model</p>', unsafe_allow_html=True)
-
