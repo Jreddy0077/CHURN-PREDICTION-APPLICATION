@@ -686,18 +686,25 @@ elif selected == "Register/Login/Profile":
 
 elif selected == "About The Model":
     bg_image_path = r"about.jpeg.jpeg"
-        bg_image_base64 = get_base64_of_bin_file(bg_image_path)
-        st.markdown(f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/jpg;base64,{bg_image_base64}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        </style>
-        """, unsafe_allow_html=True)
-  
+    import base64
+        
+    def get_base64_of_bin_file(bin_file):
+        with open(bin_file, 'rb') as f:
+             data = f.read()
+             return base64.b64encode(data).decode()
+    
+    bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+    
+    st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/jpg;base64,{bg_image_base64}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """, unsafe_allow_html=True)
     # Data for each model
     data_decision_tree = {
         'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
