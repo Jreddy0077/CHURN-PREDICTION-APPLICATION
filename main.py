@@ -685,6 +685,18 @@ elif selected == "Register/Login/Profile":
 
 
 elif selected == "About The Model":
+    bg_image_path = r"about.jpeg.jpeg"
+        bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+        st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{bg_image_base64}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
   
     # Data for each model
     data_decision_tree = {
