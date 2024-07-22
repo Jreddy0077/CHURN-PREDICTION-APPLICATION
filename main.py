@@ -353,6 +353,7 @@ if selected == "Home":
 
 
 elif selected == "Prediction Analytics":
+    data=False
 
 
 
@@ -371,8 +372,11 @@ elif selected == "Prediction Analytics":
         }}
         </style>
         """, unsafe_allow_html=True)
+    with st.container():
+         st.title('Churn Prediction Analysis...........')
     try:
          df = pd.read_csv("df.csv")
+         data=True
     except Exception as e:
          st.title("You Have No Any Prediction yet")
     
@@ -381,19 +385,18 @@ elif selected == "Prediction Analytics":
 
 
     st.set_option('deprecation.showPyplotGlobalUse', False)
-    with st.container():
-
-        st.title('Churn Prediction Analysis...........')
+    
     p1,p2=st.columns(2)
 
-    try:
-
+    if data:
         with p1:
 
-            st.markdown('<p style="color:red;font-weight:bold;">Bar plot of Churn counts:</p>', unsafe_allow_html=True)
             churn_counts = df['churn'].value_counts()
 
+
             plt.figure(figsize=(4,4))
+            st.markdown('<p style="color:red;font-weight:bold;">Bar plot of Churn counts:</p>', unsafe_allow_html=True)
+
             sns.barplot(x=churn_counts.index, y=churn_counts.values)
             plt.xlabel('Churn')
             plt.ylabel('Count')
@@ -406,19 +409,7 @@ elif selected == "Prediction Analytics":
             plt.figure(figsize=(4,4))
             sns.countplot(x="international_plan", hue="churn", data=df)
             st.pyplot()
-            #a=(len(df[(df["international_plan"]=="yes") & (df["churn"]=="yes")])/len(df[(df["international_plan"]=="yes")]))*100
-            #b=(len(df[(df["international_plan"]=="no") & (df["churn"]=="yes")])/len(df[(df["international_plan"]=="no")]))*100
-            # st.markdown('<p style="color:red;font-weight:bold;">{a}are churn out of all international planed cunstomers</p>', unsafe_allow_html=True)
-            #st.markdown('<p style="color:red;font-weight:bold;">{b}are churn out of all non international planed cunstomer</p>', unsafe_allow_html=True)
-
-
-
-
-
             
-
-
-
         st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
         plt.figure(figsize=(25,7))
         sns.countplot(x="state", hue="churn", data=df)
@@ -437,8 +428,6 @@ elif selected == "Prediction Analytics":
         plt.figure(figsize=(8,4))
         sns.countplot(x="voice_mail_plan", hue="churn", data=df)
         st.pyplot()
-    except Exception as e:
-         st.title("You Have No Any Prediction yet")
     
     
 
