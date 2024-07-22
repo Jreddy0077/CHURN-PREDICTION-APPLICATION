@@ -502,9 +502,6 @@ elif selected == "Register/Login/Profile":
                     mobile = True
                 else:
                     st.markdown('<p style="color:gold;">Incorrect Mobile Number</p>', unsafe_allow_html=True)
-                if mobile:
-                    password_org = df_user[df_user["number"] == number]["password"][0]
-
                 
                 # UI for password input
                 st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
@@ -513,16 +510,18 @@ elif selected == "Register/Login/Profile":
                 # Initialize password check
                 passs = False
                 
-                
+                if mobile:
+                    password_org = df_user[df_user["number"] == number]["password"][0]
+
                     # Get the original password for the entered number
                     
                 
                     # Check if the entered password matches the original password
-                if password_org == password:
-                    st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                    passs = True
-                else:
-                    st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                    if password_org == password:
+                        st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                        passs = True
+                    else:
+                        st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
                     
                 # Check login button
                 if st.button("Login"):
