@@ -374,7 +374,7 @@ elif selected == "Prediction Analytics":
     try:
          df = pd.read_csv("df.csv")
     except Exception as e:
-         st.error("You Have No Any Prediction yet")
+         st.title("You Have No Any Prediction yet")
     
 
     
@@ -386,57 +386,46 @@ elif selected == "Prediction Analytics":
         st.title('Churn Prediction Analysis...........')
     p1,p2=st.columns(2)
 
-    with p1:
+    if len(df)>0:
+        with p1:
+            st.markdown('<p style="color:red;font-weight:bold;">Bar plot of Churn counts:</p>', unsafe_allow_html=True)
+            churn_counts = df['churn'].value_counts()
 
-        st.markdown('<p style="color:red;font-weight:bold;">Bar plot of Churn counts:</p>', unsafe_allow_html=True)
-        churn_counts = df['churn'].value_counts()
+            plt.figure(figsize=(4,4))
+            sns.barplot(x=churn_counts.index, y=churn_counts.values)
+            plt.xlabel('Churn')
+            plt.ylabel('Count')
+            plt.title('Churn Counts')
+            st.pyplot()
 
-        plt.figure(figsize=(4,4))
-        sns.barplot(x=churn_counts.index, y=churn_counts.values)
-        plt.xlabel('Churn')
-        plt.ylabel('Count')
-        plt.title('Churn Counts')
+        with p2:
+            st.markdown('<p style="color:red;font-weight:bold;">International_plan VS Churn</p>', unsafe_allow_html=True)
+
+            plt.figure(figsize=(4,4))
+            sns.countplot(x="international_plan", hue="churn", data=df)
+            st.pyplot()
+           
+
+        st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
+        plt.figure(figsize=(25,7))
+        sns.countplot(x="state", hue="churn", data=df)
         st.pyplot()
 
-    with p2:
-         st.markdown('<p style="color:red;font-weight:bold;">International_plan VS Churn</p>', unsafe_allow_html=True)
 
-         plt.figure(figsize=(4,4))
-         sns.countplot(x="international_plan", hue="churn", data=df)
-         st.pyplot()
-         #a=(len(df[(df["international_plan"]=="yes") & (df["churn"]=="yes")])/len(df[(df["international_plan"]=="yes")]))*100
-         #b=(len(df[(df["international_plan"]=="no") & (df["churn"]=="yes")])/len(df[(df["international_plan"]=="no")]))*100
-        # st.markdown('<p style="color:red;font-weight:bold;">{a}are churn out of all international planed cunstomers</p>', unsafe_allow_html=True)
-         #st.markdown('<p style="color:red;font-weight:bold;">{b}are churn out of all non international planed cunstomer</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color:red;font-weight:bold;">Area Code vs Churn</p>', unsafe_allow_html=True)
 
+        plt.figure(figsize=(8,4))
+        sns.countplot(x="area_code", hue="churn", data=df)
 
+        st.pyplot()
 
+        st.markdown('<p style="color:red;font-weight:bold;">Voice Mail Plan vs Churn</p>', unsafe_allow_html=True)
 
+        plt.figure(figsize=(8,4))
+        sns.countplot(x="voice_mail_plan", hue="churn", data=df)
+        st.pyplot()
 
         
-
-
-
-    st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
-    plt.figure(figsize=(25,7))
-    sns.countplot(x="state", hue="churn", data=df)
-    st.pyplot()
-
-
-    st.markdown('<p style="color:red;font-weight:bold;">Area Code vs Churn</p>', unsafe_allow_html=True)
-
-    plt.figure(figsize=(8,4))
-    sns.countplot(x="area_code", hue="churn", data=df)
-
-    st.pyplot()
-
-    st.markdown('<p style="color:red;font-weight:bold;">Voice Mail Plan vs Churn</p>', unsafe_allow_html=True)
-
-    plt.figure(figsize=(8,4))
-    sns.countplot(x="voice_mail_plan", hue="churn", data=df)
-    st.pyplot()
-
-    
 
 
 elif selected == "Register/Login/Profile":
