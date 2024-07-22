@@ -529,16 +529,17 @@ elif selected == "Register/Login/Profile":
                         passs = True
                     else:
                         st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-                    
+                profile=False
                 # Check login button
                 if st.button("Login"):
                     if mobile and passs:
+                        profile=True
                         st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
                     else:
                         st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
                 
              with col3:
-                 if mobile and passs:
+                 if mobile and passs and profile:
                     if st.button("Show Profile"):
 
                         user_info = df_user[df_user["number"] == number].iloc[0]
