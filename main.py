@@ -486,69 +486,72 @@ elif selected == "Register/Login/Profile":
 
 
         if option=="Login":
-             with col1:
+            import streamlit as st
+            import pandas as pd
+            
+            # Assuming l_number and df_user are already defined
+            
+            with col1:
                 st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
                 number = st.text_input("", key="number")
-
-
-               
-                
+            
                 # Initialize mobile check
                 mobile = False
-                
+            
                 # Check if the number is in the list
                 if number in l_number:
                     st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
                     mobile = True
                 else:
                     st.markdown('<p style="color:gold;">Incorrect Mobile Number</p>', unsafe_allow_html=True)
-                
+            
                 # UI for password input
                 st.markdown('<p style="color:gold;">Enter Your Password:</p>', unsafe_allow_html=True)
                 password = st.text_input("", key="password", type="password")
-                
+            
                 # Initialize password check
                 passs = False
-                
+            
                 if mobile:
-                    password_org = df_user[df_user["number"] == number]["password"][0]
-
-                    # Get the original password for the entered number
-                    
-                
-                    # Check if the entered password matches the original password
-                    if password_org == password:
-                        st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
-                        passs = True
+                    # Check if the number is present in the DataFrame
+                    if number in df_user["number"].values:
+                        # Get the original password for the entered number
+                        password_org = df_user[df_user["number"] == number]["password"].values[0]
+            
+                        # Check if the entered password matches the original password
+                        if password_org == password:
+                            st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                            passs = True
+                        else:
+                            st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
                     else:
-                        st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
-                    
+                        st.markdown('<p style="color:gold;">Mobile Number Not Found in Database</p>', unsafe_allow_html=True)
+                
                 # Check login button
                 if st.button("Login"):
                     if mobile and passs:
                         st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
                     else:
                         st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
-                
-             with col3:
-                 if mobile and passs:
+            
+            with col3:
+                if mobile and passs:
                     if st.button("Show Profile"):
-
                         user_info = df_user[df_user["number"] == number].iloc[0]
                         name = f"{user_info['first_name']} {user_info['last_name']} {user_info['sur_name']}"
                         mail = user_info['mail']
                         contact = number
-
+            
                         st.write("     ")
                         st.markdown(f'<h3 style="color:red;">Name: {name}</h3>', unsafe_allow_html=True)
-                        st.markdown(f'<h3 style="color:red;">Contact: {contact}</h3 >', unsafe_allow_html=True)
-                        st.markdown(f'<h3  style="color:red;">Mail: {mail}</h3 >', unsafe_allow_html=True)
-                                
-
-                        
-
+                        st.markdown(f'<h3 style="color:red;">Contact: {contact}</h3>', unsafe_allow_html=True)
+                        st.markdown(f'<h3 style="color:red;">Mail: {mail}</h3>', unsafe_allow_html=True)
             
-                    
+            
+                                    
+            
+                        
+                                
 
         coll1,coll2=st.columns(2)
         if option == "Signup":
