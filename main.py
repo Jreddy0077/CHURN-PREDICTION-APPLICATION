@@ -742,19 +742,18 @@ elif selected == "About The Model":
     df_knn[['Training', 'Testing']] = df_knn[['Training', 'Testing']] * 100
     df_svc[['Training', 'Testing']] = df_svc[['Training', 'Testing']] * 100
 
-    # Displaying data in Streamlit
-    st.title("Decision Tree Performance Metrics")
-    st.dataframe(df_decision_tree)
-
-    st.title("Random Forest Performance Metrics")
-    st.dataframe(df_random_forest)
-
-    st.title("K-Nearest Neighbors (KNN) Performance Metrics")
-    st.dataframe(df_knn)
-
-    st.title("Support Vector Classifier (SVC) Performance Metrics")
-    st.dataframe(df_svc)
-
+    st.markdown("<h1 style='color:gold;'>Decision Tree Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_decision_tree, height=600, width=1000)
+    
+    st.markdown("<h1 style='color:gold;'>Random Forest Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_random_forest, height=600, width=1000)
+    
+    st.markdown("<h1 style='color:gold;'>K-Nearest Neighbors (KNN) Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_knn, height=600, width=1000)
+    
+    st.markdown("<h1 style='color:gold;'>Support Vector Classifier (SVC) Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_svc, height=600, width=1000)
+    
     # Data for all models in one DataFrame
     data = {
         'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
