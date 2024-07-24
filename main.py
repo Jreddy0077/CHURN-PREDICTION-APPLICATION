@@ -775,4 +775,4 @@ elif selected == "About The Model":
     st.dataframe(df)
 
 
-    st.markdown('<p style="color:red;font-weight:bold;">Based On The  Cross Validation Scores We Finallized Decision Tree Model</p>', unsafe_allow_html=True)
+    st.markdown('<h1 style="color:red;font-weight:bold;">Based On The  Cross Validation Scores We Finallized Decision Tree Model</h1>', unsafe_allow_html=True)
