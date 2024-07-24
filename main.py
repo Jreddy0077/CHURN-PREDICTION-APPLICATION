@@ -743,16 +743,16 @@ elif selected == "About The Model":
     df_svc[['Training', 'Testing']] = df_svc[['Training', 'Testing']] * 100
 
     st.markdown("<h1 style='color:gold;'>Decision Tree Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_decision_tree, height=600, width=300)
+    st.dataframe(df_decision_tree, height=300, width=600)
     
     st.markdown("<h1 style='color:gold;'>Random Forest Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_random_forest, height=600, width=300)
+    st.dataframe(df_random_forest, height=300, width=600)
     
     st.markdown("<h1 style='color:gold;'>K-Nearest Neighbors (KNN) Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_knn, height=600, width=300)
+    st.dataframe(df_knn, height=300, width=600)
     
     st.markdown("<h1 style='color:gold;'>Support Vector Classifier (SVC) Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_svc, height=600, width=300)
+    st.dataframe(df_svc, height=300, width=600)
     
     # Data for all models in one DataFrame
     data = {
