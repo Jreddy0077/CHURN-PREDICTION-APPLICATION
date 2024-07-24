@@ -743,16 +743,16 @@ elif selected == "About The Model":
     df_svc[['Training', 'Testing']] = df_svc[['Training', 'Testing']] * 100
 
     st.markdown("<h1 style='color:gold;'>Decision Tree Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_decision_tree, height=600, width=1000)
+    st.dataframe(df_decision_tree, height=600, width=600)
     
     st.markdown("<h1 style='color:gold;'>Random Forest Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_random_forest, height=600, width=1000)
+    st.dataframe(df_random_forest, height=600, width=600)
     
     st.markdown("<h1 style='color:gold;'>K-Nearest Neighbors (KNN) Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_knn, height=600, width=1000)
+    st.dataframe(df_knn, height=600, width=600)
     
     st.markdown("<h1 style='color:gold;'>Support Vector Classifier (SVC) Performance Metrics</h1>", unsafe_allow_html=True)
-    st.dataframe(df_svc, height=600, width=1000)
+    st.dataframe(df_svc, height=600, width=600)
     
     # Data for all models in one DataFrame
     data = {
@@ -770,7 +770,8 @@ elif selected == "About The Model":
     df[['Decision Tree', 'Random Forest', 'KNN', 'SVC']] = df[['Decision Tree', 'Random Forest', 'KNN', 'SVC']] * 100
 
     # Displaying data in Streamlit
-    st.title("All Models Cross Validation Scores")
+    st.markdown("<h1 style='color:gold;'>All Models Cross Validation Score(SVC) Performance Metrics</h1>", unsafe_allow_html=True)
+
     st.dataframe(df)
 
 
