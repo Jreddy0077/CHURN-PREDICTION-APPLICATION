@@ -596,83 +596,83 @@ elif selected == "Register/Login/Profile":
 
            
 
-            with coll2:
+            #with coll2:
 
-                st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
-                mail = st.text_input("", key="mail")
+            st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
+            mail = st.text_input("", key="mail")
 
-                def is_valid_email(email):
-                    pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                    return pattern.match(email) is not None
+            def is_valid_email(email):
+                pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                return pattern.match(email) is not None
 
-                if is_valid_email(mail):
-                    st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
-                    mail_val = True
-                else:
-                    st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
-                    mail_val = False
+            if is_valid_email(mail):
+                st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
+                mail_val = True
+            else:
+                st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
+                mail_val = False
 
-                def is_valid_password(password):
-                    pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
-                    return pattern.match(password) is not None
+            def is_valid_password(password):
+                pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
+                return pattern.match(password) is not None
 
-           
-                
-                st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
-                password = st.text_input("", key="password", type="password")
-    
-                if is_valid_password(password):
-                    st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
-                    password_val = True
-                else:
-                    st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
-                    password_val = False
-    
-                st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
-                c_password = st.text_input("", key="c_password", type="password")
-    
-                if c_password == password:
-                    st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
-                    c_password_val = True
-                else:
-                    st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
-                    c_password_val = False
+       
+            
+            st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
+            password = st.text_input("", key="password", type="password")
+
+            if is_valid_password(password):
+                st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
+                password_val = True
+            else:
+                st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
+                password_val = False
+
+            st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
+            c_password = st.text_input("", key="c_password", type="password")
+
+            if c_password == password:
+                st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
+                c_password_val = True
+            else:
+                st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
+                c_password_val = False
+            
+        
+
+        if st.button("Register"):
+            l_password = list(df_user["password"])
+
+            l_number = list(df_user["number"])
+            l_mail = list(df_user["mail"])
+            
+
+            
+            
+            if (number) in l_number:
+                st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
+            elif mail in l_mail:
+                st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
+            elif password in l_password:
+                st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
+
+
+            elif c_password_val and password_val and mail_val and number_val:
+
                 
             
 
-            if st.button("Register"):
-                l_password = list(df_user["password"])
+                #new_user = [first_name, last_name, sur_name, (number), mail, password]
 
-                l_number = list(df_user["number"])
-                l_mail = list(df_user["mail"])
+                add_user(first_name, last_name, sur_name, number, mail, password)
+
+
+
+
                 
-
-                
-                
-                if (number) in l_number:
-                    st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
-                elif mail in l_mail:
-                    st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
-                elif password in l_password:
-                    st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
-
-
-                elif c_password_val and password_val and mail_val and number_val:
-
-                    
-                
-
-                    #new_user = [first_name, last_name, sur_name, (number), mail, password]
-
-                    add_user(first_name, last_name, sur_name, number, mail, password)
-
-
-
-
-                    
-                    st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
-                else:
-                    st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
+                st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
+            else:
+                st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
 
 
 
