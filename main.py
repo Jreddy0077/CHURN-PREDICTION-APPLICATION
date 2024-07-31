@@ -330,28 +330,28 @@ if selected == "Home":
 
                     
         
-                with c1:
-                    if st.button("Predict"):
-                        with st.spinner("Please wait while predicting...."):
-                            time.sleep(3)
+                #with c1:
+                if st.button("Predict"):
+                    with st.spinner("Please wait while predicting...."):
+                        time.sleep(3)
+                    
+                    
+                        try:
+                            result = model.predict(df)
+                            churn = ["Yes" if pred == 1 else "No" for pred in result]
+                            df["churn"] = churn
+        
+                            churn_counts = df['churn'].value_counts()
+        
+                            st.markdown(f'<p style="color:orange; font-weight:bold;">No of churn customers: {churn_counts["Yes"]}</p>', unsafe_allow_html=True)
+                            st.markdown(f'<p style="color:orange; font-weight:bold;">Total customers: {len(churn)}</p>', unsafe_allow_html=True)
+                            st.title("Go to Prediction Analytics to view analytics")
+                                    
+        
+        
+                        except Exception as e:
+                                st.error("Please upload your file before predicting...")
                         
-                        
-                            try:
-                                result = model.predict(df)
-                                churn = ["Yes" if pred == 1 else "No" for pred in result]
-                                df["churn"] = churn
-            
-                                churn_counts = df['churn'].value_counts()
-            
-                                st.markdown(f'<p style="color:orange; font-weight:bold;">No of churn customers: {churn_counts["Yes"]}</p>', unsafe_allow_html=True)
-                                st.markdown(f'<p style="color:orange; font-weight:bold;">Total customers: {len(churn)}</p>', unsafe_allow_html=True)
-                                st.title("Go to Prediction Analytics to view analytics")
-                                        
-            
-            
-                            except Exception as e:
-                                    st.error("Please upload your file before predicting...")
-                            
                     
                         
 
