@@ -13,7 +13,15 @@ import re
 
 
 
-
+import os
+model_path = os.path.join(os.path.dirname(__file__), "strnew.pkl")
+try:
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
+except FileNotFoundError:
+    st.error(f"Model file {model_path} not found.")
+except Exception as e:
+    st.error(f"An error occurred while loading the model: {e}")
 ####################################################################################
 
 db_user = '2yasPb2k6DKrXZH.root'
@@ -21,12 +29,18 @@ db_password = 'E28f3eorNGjxx6K4'
 db_host = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com'
 db_port = '4000'
 db_name = 'test'
-ca_path = '/path/to/ca_cert.pem'  # Replace with the actual path to your CA certificate
+ca_path = '/path/to/ca_cert.pem'  
+
+# creating the sql syntax for connecting with the database
 
 connection_string = (
     f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?'
     f'ssl_ca={ca_path}&ssl_verify_cert=true'
+
 )
+
+# ca_path 
+#  CA certificate is used to verify the identity of the database server to ensure that the connection is secure.
 
 def add_user(first_name, last_name, sur_name, number, mail, password):
     try:
@@ -59,7 +73,6 @@ def add_user(first_name, last_name, sur_name, number, mail, password):
 
 
 try:
-    # Initialize connection
     engine = create_engine(connection_string)
     conn = engine.connect()
     df_user= pd.read_sql('SELECT * FROM users', conn)
@@ -85,6 +98,12 @@ def get_base64_of_bin_file(bin_file):
 st.set_page_config(layout="wide")
 
 # Custom CSS to remove padding and margins
+
+# these are the internal dinamic classes genrating during running and we are making them padding 0
+# style for inserting the css script
+# unsafe_allow_html=True to insert the html and css into the streamlit
+# markdown is to exicute the css and html into the streamlit
+
 custom_css = """
     <style>
     .css-1d391kg, .css-1v3fvcr, .css-18e3th9 {
@@ -103,7 +122,7 @@ with st.sidebar:
         menu_title="Main Menu",  # required
         options=["Home", "Prediction Analytics", "Register/Login/Profile","About The Model"],  # required
         icons=["house", "bar-chart", "person-square","robot"],  # optional
-        menu_icon="Icon font",  # optional
+         menu_icon="box-arrow-in-right",
         default_index=2,  # optional
     )
 
@@ -114,6 +133,7 @@ if selected == "Home":
         st.markdown(f"""
         <style>
         .stApp {{
+
             background-image: url("data:image/jpg;base64,{bg_image_base64}");
             background-size: cover;
             background-repeat: no-repeat;
@@ -131,8 +151,7 @@ if selected == "Home":
 
         prediction_method = st.radio('', ('Predict Churn Record-wise', 'Predict Churn for Entire DataFrame'))
         if prediction_method=='Predict Churn Record-wise':
-            import streamlit as st
-            c1, c2, c3, c4, c5, c6 = st.columns(6)
+            c1, c2, c3, c4, c5, c6 = st.columns([1,1,1,1,1,1.3])
             with c1:
                 states = ['OH', 'NJ', 'OK', 'MA', 'MO', 'LA', 'WV', 'IN', 'RI', 'IA', 'MT',
                         'NY', 'ID', 'VA', 'TX', 'FL', 'CO', 'AZ', 'SC', 'WY', 'HI', 'NH',
@@ -260,16 +279,9 @@ if selected == "Home":
 
             df2= pd.DataFrame(data2, columns=columns)
             import os
+# C:\Users\User\project\strnew.pkl
 
-
-            model_path = os.path.join(os.path.dirname(__file__), "strnew.pkl")
-            try:
-                with open(model_path, "rb") as f:
-                    model = pickle.load(f)
-            except FileNotFoundError:
-                st.error(f"Model file {model_path} not found.")
-            except Exception as e:
-                st.error(f"An error occurred while loading the model: {e}")
+            
             
                 
             if st.button("Predict"):
@@ -289,15 +301,7 @@ if selected == "Home":
     
                 
         if prediction_method=='Predict Churn for Entire DataFrame':
-                import os
-                model_path = os.path.join(os.path.dirname(__file__), "strnew.pkl")
-                try:
-                    with open(model_path, "rb") as f:
-                        model = pickle.load(f)
-                except FileNotFoundError:
-                    st.error(f"Model file {model_path} not found.")
-                except Exception as e:
-                    st.error(f"An error occurred while loading the model: {e}")
+                
 
                 st.markdown('<p style="color:red;">Select file type</p>', unsafe_allow_html=True)
 
@@ -326,28 +330,28 @@ if selected == "Home":
 
                     
         
-        
-                if st.button("Predict"):
-                    with st.spinner("Please wait while predicting...."):
-                        time.sleep(3)
-                    
-                    
-                        try:
-                            result = model.predict(df)
-                            churn = ["Yes" if pred == 1 else "No" for pred in result]
-                            df["churn"] = churn
-        
-                            churn_counts = df['churn'].value_counts()
-        
-                            st.markdown(f'<p style="color:orange; font-weight:bold;">No of churn customers: {churn_counts["Yes"]}</p>', unsafe_allow_html=True)
-                            st.markdown(f'<p style="color:orange; font-weight:bold;">Total customers: {len(churn)}</p>', unsafe_allow_html=True)
-                            st.title("Go to Prediction Analytics to view analytics")
-                                    
-        
-        
-                        except Exception as e:
-                                st.error("Please upload your file before predicting...")
+                with c1:
+                    if st.button("Predict"):
+                        with st.spinner("Please wait while predicting...."):
+                            time.sleep(3)
                         
+                        
+                            try:
+                                result = model.predict(df)
+                                churn = ["Yes" if pred == 1 else "No" for pred in result]
+                                df["churn"] = churn
+            
+                                churn_counts = df['churn'].value_counts()
+            
+                                st.markdown(f'<p style="color:orange; font-weight:bold;">No of churn customers: {churn_counts["Yes"]}</p>', unsafe_allow_html=True)
+                                st.markdown(f'<p style="color:orange; font-weight:bold;">Total customers: {len(churn)}</p>', unsafe_allow_html=True)
+                                st.title("Go to Prediction Analytics to view analytics")
+                                        
+            
+            
+                            except Exception as e:
+                                    st.error("Please upload your file before predicting...")
+                            
                     
                         
 
@@ -435,7 +439,6 @@ elif selected == "Prediction Analytics":
 elif selected == "Register/Login/Profile":
         
         bg_image_path = r"login_image.jpg"
-        import base64
         
         def get_base64_of_bin_file(bin_file):
             with open(bin_file, 'rb') as f:
