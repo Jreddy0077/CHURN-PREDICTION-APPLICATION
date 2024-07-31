@@ -594,8 +594,7 @@ elif selected == "Register/Login/Profile":
                     pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
                     return pattern.match(password) is not None
 
-            from streamlit_lottie import st_lottie   
-            import json   
+           
 
             with coll2:
 
@@ -628,26 +627,26 @@ elif selected == "Register/Login/Profile":
            
 
 
-            st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
-            password = st.text_input("", key="password", type="password")
-
-            if is_valid_password(password):
-                st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
-                password_val = True
-            else:
-                st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
-                password_val = False
-
-            st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
-            c_password = st.text_input("", key="c_password", type="password")
-
-            if c_password == password:
-                st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
-                c_password_val = True
-            else:
-                st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
-                c_password_val = False
-            
+                st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
+                password = st.text_input("", key="password", type="password")
+    
+                if is_valid_password(password):
+                    st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
+                    password_val = True
+                else:
+                    st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
+                    password_val = False
+    
+                st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
+                c_password = st.text_input("", key="c_password", type="password")
+    
+                if c_password == password:
+                    st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
+                    c_password_val = True
+                else:
+                    st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
+                    c_password_val = False
+                
             
 
             if st.button("Register"):
