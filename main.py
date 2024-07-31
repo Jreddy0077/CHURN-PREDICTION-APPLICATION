@@ -599,7 +599,7 @@ elif selected == "Register/Login/Profile":
             #with coll2:
 
             st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
-            mail = st.text_input("", key="mail")
+            mail = st.text_input("", key="maill")
 
             def is_valid_email(email):
                 pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
