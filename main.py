@@ -597,36 +597,7 @@ elif selected == "Register/Login/Profile":
            
 
             with coll2:
-
                 
-
-                def load_lottiefile(path):
-                    with open(path, "r") as f:
-                        return json.load(f)
-
-                # Load Lottie file
-                lottie_path = r"User registration.mp4.lottie.json"
-                lottie_animation = load_lottiefile(lottie_path)
-
-                # Display Lottie animation
-                st_lottie(
-                    lottie_animation,
-                    speed=3,
-                    reverse=False,
-                    loop=True,
-                    quality="high",
-                
-                )
-
-
-
-
-
-
-
-           
-
-
                 st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
                 password = st.text_input("", key="password", type="password")
     
