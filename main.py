@@ -597,6 +597,26 @@ elif selected == "Register/Login/Profile":
            
 
             with coll2:
+
+                 st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
+                mail = st.text_input("", key="mail")
+
+                def is_valid_email(email):
+                    pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                    return pattern.match(email) is not None
+
+                if is_valid_email(mail):
+                    st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
+                    mail_val = True
+                else:
+                    st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
+                    mail_val = False
+
+                def is_valid_password(password):
+                    pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
+                    return pattern.match(password) is not None
+
+           
                 
                 st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
                 password = st.text_input("", key="password", type="password")
