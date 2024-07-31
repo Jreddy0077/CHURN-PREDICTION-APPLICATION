@@ -598,7 +598,7 @@ elif selected == "Register/Login/Profile":
 
             with coll2:
 
-                 st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
+                st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
                 mail = st.text_input("", key="mail")
 
                 def is_valid_email(email):
