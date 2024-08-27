@@ -24,13 +24,65 @@ except Exception as e:
     st.error(f"An error occurred while loading the model: {e}")
 ####################################################################################
 
+db_user = '2yasPb2k6DKrXZH.root'
+db_password = 'E28f3eorNGjxx6K4'
+db_host = 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com'
+db_port = '4000'
+db_name = 'test'
+ca_path = '/path/to/ca_cert.pem'  
+
+# creating the sql syntax for connecting with the database
+
+connection_string = (
+    f'mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?'
+    f'ssl_ca={ca_path}&ssl_verify_cert=true'
+
+)
+
+# ca_path 
+#  CA certificate is used to verify the identity of the database server to ensure that the connection is secure.
+
+def add_user(first_name, last_name, sur_name, number, mail, password):
+    try:
+        engine = create_engine(connection_string)
+        conn = engine.connect()
+
+        insert_query =text("""
+            INSERT INTO users (first_name, last_name, sur_name, number, mail, password)
+            VALUES (:first_name, :last_name, :sur_name, :number, :mail, :password)
+        """)
+        
+        conn.execute(insert_query, {
+            'first_name': first_name,
+            'last_name': last_name,
+            'sur_name': sur_name,
+            'number': number,
+            'mail': mail,
+            'password': password
+        })
+        
+        conn.commit()
+        conn.close()
+        
+        st.success("User added successfully!")
+    except SQLAlchemyError as e:
+        st.error(f"An error occurred: {str(e)}")
+
+############################################################################
 
 
 
+try:
+    engine = create_engine(connection_string)
+    conn = engine.connect()
+    df_user= pd.read_sql('SELECT * FROM users', conn)
 
+    df_user['number'] = df_user['number'].astype(str)
 
-
-
+    conn.close()
+    engine.dispose()
+except SQLAlchemyError as e:
+    st.error(f"An error occurred: {str(e)}")
 
 
 
@@ -382,3 +434,322 @@ elif selected == "Prediction Analytics":
         st.pyplot()
     
     
+
+
+elif selected == "Register/Login/Profile":
+        
+        bg_image_path = r"login_image.jpg"
+        
+        def get_base64_of_bin_file(bin_file):
+            with open(bin_file, 'rb') as f:
+                 data = f.read()
+                 return base64.b64encode(data).decode()
+        
+        bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+        
+        st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{bg_image_base64}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
+########################################################################3333333333
+        
+#################################################################################
+        l_number = list(df_user["number"])
+
+##############################################################################################
+
+   
+    
+
+        st.markdown('<h2 style="color:orange;">Welcome To Churn Prediction Application</h2>', unsafe_allow_html=True)
+
+
+
+
+
+        with st.container():
+            st.markdown('<p style="color:red;">To access the app please Login or Signup</p>', unsafe_allow_html=True)
+            st.markdown('<p style="color:red;">Select an option:</p>', unsafe_allow_html=True)
+            option = st.selectbox('', ('Login',"Signup"))
+
+
+        col1, col2 ,col3= st.columns([2,1,3])
+
+        
+
+
+       
+
+
+
+        if option=="Login":
+            import streamlit as st
+            import pandas as pd
+            
+            # Assuming l_number and df_user are already defined
+            
+            with col1:
+                st.markdown('<p style="color:gold;">Enter Your Mobile Number..</p>', unsafe_allow_html=True)
+                number1 = st.text_input("", key="number1")
+            
+                # Initialize mobile check
+                mobile = False
+            
+                # Check if the number is in the list
+                if number1 in l_number:
+                    st.markdown('<p style="color:gold;">Mobile Number Is Correct</p>', unsafe_allow_html=True)
+                    mobile = True
+                else:
+                    st.markdown('<p style="color:gold;">Incorrect Mobile Number</p>', unsafe_allow_html=True)
+            
+                # UI for password input
+                st.markdown('<p style="color:gold;">Enter Your Password..</p>', unsafe_allow_html=True)
+                password1 = st.text_input("", key="password1", type="password")
+            
+                # Initialize password check
+                passs = False
+            
+                if mobile:
+                    # Check if the number is present in the DataFrame
+                    if number1 in df_user["number"].values:
+                        # Get the original password for the entered number
+                        password_org = df_user[df_user["number"] == number1]["password"].values[0]
+            
+                        # Check if the entered password matches the original password
+                        if password_org == password1:
+                            st.markdown('<p style="color:gold;">Password Is Correct</p>', unsafe_allow_html=True)
+                            passs = True
+                        else:
+                            st.markdown('<p style="color:gold;">Incorrect Password</p>', unsafe_allow_html=True)
+                    else:
+                        st.markdown('<p style="color:gold;">Mobile Number Not Found in Database</p>', unsafe_allow_html=True)
+                
+                # Check login button
+                if st.button("Login"):
+                    if mobile and passs:
+                        st.markdown('<p style="color:gold;">Successfully Logged In</p>', unsafe_allow_html=True)
+                    else:
+                        st.markdown('<p style="color:gold;">Enter The Details Correctly</p>', unsafe_allow_html=True)
+            
+            with col3:
+                if mobile and passs:
+                    if st.button("Show Profile"):
+                        user_info = df_user[df_user["number"] == number1].iloc[0]
+                        name = f"{user_info['first_name']} {user_info['last_name']} {user_info['sur_name']}"
+                        mail = user_info['mail']
+                        contact = number1
+            
+                        st.write("     ")
+                        st.markdown(f'<h3 style="color:red;">Name: {name}</h3>', unsafe_allow_html=True)
+                        st.markdown(f'<h3 style="color:red;">Contact: {contact}</h3>', unsafe_allow_html=True)
+                        st.markdown(f'<h3 style="color:red;">Mail: {mail}</h3>', unsafe_allow_html=True)
+            
+            
+                                    
+            
+                        
+                                
+
+        coll1,coll2=st.columns(2)
+        if option == "Signup":
+            with coll1:
+                st.markdown('<p style="color:gold;">Enter The First Name:</p>', unsafe_allow_html=True)
+                first_name = st.text_input("", key="first_name")
+                st.markdown('<p style="color:gold;">Enter The Surname:</p>', unsafe_allow_html=True)
+                sur_name = st.text_input("", key="sur_name")
+
+                st.markdown('<p style="color:gold;">Enter The Last Name:</p>', unsafe_allow_html=True)
+                last_name = st.text_input("", key="last_name")
+                st.markdown('<p style="color:gold;">Enter Your Mobile Number:</p>', unsafe_allow_html=True)
+                number = st.text_input("", key="number")
+
+                if number.isnumeric() and number[0] in "9876" and len(number) == 10:
+                    st.markdown('<p style="color:green;">Number is valid</p>', unsafe_allow_html=True)
+                    number_val = True
+                else:
+                    st.markdown('<p style="color:red;">Number is invalid</p>', unsafe_allow_html=True)
+                    number_val = False
+
+               
+
+           
+
+            #with coll2:
+
+                st.markdown('<p style="color:gold;">Enter The Mail</p>', unsafe_allow_html=True)
+                mail = st.text_input("", key="maill")
+
+                def is_valid_email(email):
+                    pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                    return pattern.match(email) is not None
+
+                if is_valid_email(mail):
+                    st.markdown('<p style="color:green;">The email address is valid</p>', unsafe_allow_html=True)
+                    mail_val = True
+                else:
+                    st.markdown('<p style="color:red;">The email address is invalid</p>', unsafe_allow_html=True)
+                    mail_val = False
+
+                def is_valid_password(password):
+                    pattern = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@#$!%*?&]{8,16}$')
+                    return pattern.match(password) is not None
+
+       
+                
+                st.markdown('<p style="color:gold;">Enter the password</p>', unsafe_allow_html=True)
+                password = st.text_input("", key="password", type="password")
+
+                if is_valid_password(password):
+                    st.markdown('<p style="color:green;">The password is valid</p>', unsafe_allow_html=True)
+                    password_val = True
+                else:
+                    st.markdown('<p style="color:red;">The password should have at least one lowercase letter, one uppercase letter, one digit, one special character (@$!%*?&) and be 8-16 characters long.</p>', unsafe_allow_html=True)
+                    password_val = False
+
+                st.markdown('<p style="color:gold;">Confirm the password</p>', unsafe_allow_html=True)
+                c_password = st.text_input("", key="c_password", type="password")
+
+                if c_password == password:
+                    st.markdown('<p style="color:green;">Password Is Matched</p>', unsafe_allow_html=True)
+                    c_password_val = True
+                else:
+                    st.markdown('<p style="color:red;">Password Is Not Matches</p>', unsafe_allow_html=True)
+                    c_password_val = False
+                
+        
+
+            if st.button("Register"):
+                l_password = list(df_user["password"])
+
+                l_number = list(df_user["number"])
+                l_mail = list(df_user["mail"])
+                
+
+                
+                
+                if (number) in l_number:
+                    st.markdown('<p style="color:red;">This Number is Already Registered</p>', unsafe_allow_html=True)
+                elif mail in l_mail:
+                    st.markdown('<p style="color:red;">This mail is Already Registered</p>', unsafe_allow_html=True)
+                elif password in l_password:
+                    st.markdown('<p style="color:red;">This password is Already Registered</p>', unsafe_allow_html=True)
+
+
+                elif c_password_val and password_val and mail_val and number_val:
+
+                    
+                
+
+                    #new_user = [first_name, last_name, sur_name, (number), mail, password]
+
+                    add_user(first_name, last_name, sur_name, number, mail, password)
+
+
+
+
+                    
+                    st.markdown('<p style="color:green;">Successfully Registered</p>', unsafe_allow_html=True)
+                else:
+                    st.markdown('<p style="color:red;">You Have Entered Something Wrong</p>', unsafe_allow_html=True)
+
+
+
+
+elif selected == "About The Model":
+    bg_image_path = r"about.jpeg.jpeg"
+    import base64
+        
+    def get_base64_of_bin_file(bin_file):
+        with open(bin_file, 'rb') as f:
+             data = f.read()
+             return base64.b64encode(data).decode()
+    
+    bg_image_base64 = get_base64_of_bin_file(bg_image_path)
+    
+    st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/jpg;base64,{bg_image_base64}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """, unsafe_allow_html=True)
+    # Data for each model
+    data_decision_tree = {
+        'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
+        'Training': [0.972156862745098, 0.975, 0.832, 0.897841726618705, 0.9141609195402298],
+        'Testing': [0.9747058823529412, 0.96875, 0.8340807174887892, 0.8963855421686747, 0.9150092145331555]
+    }
+
+    data_random_forest = {
+        'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
+        'Training': [0.9788235294117648, 1.0, 0.856, 0.9224137931034483, 0.9279999999999999],
+        'Testing': [0.961764705882353, 0.9817073170731707, 0.7219730941704036, 0.8320413436692508, 0.8599709749795824]
+    }
+
+    data_knn = {
+        'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
+        'Training': [0.8678431372549019, 0.8958333333333334, 0.11466666666666667, 0.20330969267139481, 0.556183908045977],
+        'Testing': [0.8747058823529412, 0.8125, 0.05829596412556054, 0.1087866108786611, 0.5281324099571607]
+    }
+
+    data_svc = {
+        'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
+        'Training': [0.8419607843137255, 0.25, 0.037333333333333336, 0.06496519721577727, 0.5090114942528736],
+        'Testing': [0.8652941176470588, 0.4117647058823529, 0.06278026905829596, 0.10894941634241245, 0.524619653825018]
+    }
+
+    # Creating dataframes
+    df_decision_tree = pd.DataFrame(data_decision_tree)
+    df_random_forest = pd.DataFrame(data_random_forest)
+    df_knn = pd.DataFrame(data_knn)
+    df_svc = pd.DataFrame(data_svc)
+
+    # Converting to percentages
+    df_decision_tree[['Training', 'Testing']] = df_decision_tree[['Training', 'Testing']] * 100
+    df_random_forest[['Training', 'Testing']] = df_random_forest[['Training', 'Testing']] * 100
+    df_knn[['Training', 'Testing']] = df_knn[['Training', 'Testing']] * 100
+    df_svc[['Training', 'Testing']] = df_svc[['Training', 'Testing']] * 100
+
+    st.markdown("<h1 style='color:gold;'>Decision Tree Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_decision_tree, height=300, width=600)
+    
+    st.markdown("<h1 style='color:gold;'>Random Forest Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_random_forest, height=300, width=600)
+    
+    st.markdown("<h1 style='color:gold;'>K-Nearest Neighbors (KNN) Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_knn, height=300, width=600)
+    
+    st.markdown("<h1 style='color:gold;'>Support Vector Classifier (SVC) Performance Metrics</h1>", unsafe_allow_html=True)
+    st.dataframe(df_svc, height=300, width=600)
+    
+    # Data for all models in one DataFrame
+    data = {
+        'Metric': ['Accuracy', 'Precision', 'Recall', 'F1 Score', 'ROC AUC Score'],
+        'Decision Tree': [0.9678431372549021, 0.9580279955595643, 0.8186666666666668, 0.8812063067003717, 0.9150927203065133],
+        'Random Forest': [0.943529411764706, 0.9793567209848429, 0.6293333333333333, 0.7658206482488022, 0.913704214559387],
+        'KNN': [0.8619607843137256, 0.8880952380952382, 0.07200000000000001, 0.13287531335822061, 0.7268045977011494],
+        'SVC': [0.8454901960784313, 0.3094871794871795, 0.04266666666666667, 0.07430479338277116, 0.5222]  # ROC AUC Score is added as a placeholder
+    }
+
+    # Creating the DataFrame
+    df = pd.DataFrame(data)
+
+    # Converting to percentages
+    df[['Decision Tree', 'Random Forest', 'KNN', 'SVC']] = df[['Decision Tree', 'Random Forest', 'KNN', 'SVC']] * 100
+
+    # Displaying data in Streamlit
+    st.markdown("<h1 style='color:gold;'>All Models Cross Validation Score(SVC) Performance Metrics</h1>", unsafe_allow_html=True)
+
+    st.dataframe(df)
+
+
+    st.markdown('<h1 style="color:red;font-weight:bold;">Based On The  Cross Validation Scores We Finallized Decision Tree Model</h1>', unsafe_allow_html=True)
