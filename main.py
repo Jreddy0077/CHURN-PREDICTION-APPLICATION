@@ -340,7 +340,6 @@ if selected == "Home":
                             churn_counts = df['churn'].value_counts()
 
                             df.to_csv("df.csv", index=False)
-                            st.dataframe(df)
         
                             st.markdown(f'<p style="color:orange; font-weight:bold;">No of churn customers: {churn_counts["Yes"]}</p>', unsafe_allow_html=True)
                             st.markdown(f'<p style="color:orange; font-weight:bold;">Total customers: {len(churn)}</p>', unsafe_allow_html=True)
@@ -393,7 +392,6 @@ elif selected == "Prediction Analytics":
 
     if data:
 
-        st.dataframe(df)
         with p1:
 
             churn_counts = df['churn'].value_counts()
@@ -415,26 +413,26 @@ elif selected == "Prediction Analytics":
             sns.countplot(x="international_plan", hue="churn", data=df)
             st.pyplot()
             
-            st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
-            plt.figure(figsize=(25,7))
-            sns.countplot(x="state", hue="churn", data=df)
-            st.pyplot()
+        st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
+        plt.figure(figsize=(25,7))
+        sns.countplot(x="state", hue="churn", data=df)
+        st.pyplot()
+
+
+        st.markdown('<p style="color:red;font-weight:bold;">Area Code vs Churn</p>', unsafe_allow_html=True)
+
+        plt.figure(figsize=(8,4))
+        sns.countplot(x="area_code", hue="churn", data=df)
+
+        st.pyplot()
+
+        st.markdown('<p style="color:red;font-weight:bold;">Voice Mail Plan vs Churn</p>', unsafe_allow_html=True)
+
+        plt.figure(figsize=(8,4))
+        sns.countplot(x="voice_mail_plan", hue="churn", data=df)
+        st.pyplot()
     
-    
-            st.markdown('<p style="color:red;font-weight:bold;">Area Code vs Churn</p>', unsafe_allow_html=True)
-    
-            plt.figure(figsize=(8,4))
-            sns.countplot(x="area_code", hue="churn", data=df)
-    
-            st.pyplot()
-    
-            st.markdown('<p style="color:red;font-weight:bold;">Voice Mail Plan vs Churn</p>', unsafe_allow_html=True)
-    
-            plt.figure(figsize=(8,4))
-            sns.countplot(x="voice_mail_plan", hue="churn", data=df)
-            st.pyplot()
-        
-    
+
 
 
 elif selected == "Register/Login/Profile":
