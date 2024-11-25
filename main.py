@@ -388,7 +388,7 @@ elif selected == "Prediction Analytics":
     
 
 
-    st.set_option('deprecation.showPyplotGlobalUse', False)
+   
     
     p1,p2=st.columns(2)
 
@@ -414,25 +414,25 @@ elif selected == "Prediction Analytics":
             sns.countplot(x="international_plan", hue="churn", data=df)
             st.pyplot()
             
-        st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
-        plt.figure(figsize=(25,7))
-        sns.countplot(x="state", hue="churn", data=df)
-        st.pyplot()
-
-
-        st.markdown('<p style="color:red;font-weight:bold;">Area Code vs Churn</p>', unsafe_allow_html=True)
-
-        plt.figure(figsize=(8,4))
-        sns.countplot(x="area_code", hue="churn", data=df)
-
-        st.pyplot()
-
-        st.markdown('<p style="color:red;font-weight:bold;">Voice Mail Plan vs Churn</p>', unsafe_allow_html=True)
-
-        plt.figure(figsize=(8,4))
-        sns.countplot(x="voice_mail_plan", hue="churn", data=df)
-        st.pyplot()
+            st.markdown('<p style="color:red;font-weight:bold;">Churn VS State</p>', unsafe_allow_html=True)
+            plt.figure(figsize=(25,7))
+            sns.countplot(x="state", hue="churn", data=df)
+            st.pyplot()
     
+    
+            st.markdown('<p style="color:red;font-weight:bold;">Area Code vs Churn</p>', unsafe_allow_html=True)
+    
+            plt.figure(figsize=(8,4))
+            sns.countplot(x="area_code", hue="churn", data=df)
+    
+            st.pyplot()
+    
+            st.markdown('<p style="color:red;font-weight:bold;">Voice Mail Plan vs Churn</p>', unsafe_allow_html=True)
+    
+            plt.figure(figsize=(8,4))
+            sns.countplot(x="voice_mail_plan", hue="churn", data=df)
+            st.pyplot()
+        
     
 
 
