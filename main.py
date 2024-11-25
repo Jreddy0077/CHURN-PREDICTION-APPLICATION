@@ -279,11 +279,7 @@ if selected == "Home":
 
             df2= pd.DataFrame(data2, columns=columns)
             import os
-# C:\Users\User\project\strnew.pkl
 
-            
-            
-                
             if st.button("Predict"):
                 with st.spinner("Please wait while predicting...."):
                     time.sleep(0.5)
@@ -393,6 +389,8 @@ elif selected == "Prediction Analytics":
     p1,p2=st.columns(2)
 
     if data:
+
+        st.dataframe(df)
         with p1:
 
             churn_counts = df['churn'].value_counts()
