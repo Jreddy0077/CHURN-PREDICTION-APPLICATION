@@ -95,7 +95,7 @@ def get_base64_of_bin_file(bin_file):
 
 
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 # Custom CSS to remove padding and margins
 
