@@ -338,6 +338,7 @@ if selected == "Home":
                             df["churn"] = churn
         
                             churn_counts = df['churn'].value_counts()
+                            st.dataframe(df)
         
                             st.markdown(f'<p style="color:orange; font-weight:bold;">No of churn customers: {churn_counts["Yes"]}</p>', unsafe_allow_html=True)
                             st.markdown(f'<p style="color:orange; font-weight:bold;">Total customers: {len(churn)}</p>', unsafe_allow_html=True)
