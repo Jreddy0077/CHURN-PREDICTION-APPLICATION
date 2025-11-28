@@ -128,7 +128,7 @@ with st.sidebar:
 
 # Pages based on selected option
 if selected == "Home":
-        bg_image_path = r"sivasankar.jpg"
+        bg_image_path = r"bg_home1.jpg"
         bg_image_base64 = get_base64_of_bin_file(bg_image_path)
         st.markdown(f"""
         <style>
@@ -752,3 +752,4 @@ elif selected == "About The Model":
 
 
     st.markdown('<h1 style="color:red;font-weight:bold;">Based On The  Cross Validation Scores We Finallized Decision Tree Model</h1>', unsafe_allow_html=True)
+
